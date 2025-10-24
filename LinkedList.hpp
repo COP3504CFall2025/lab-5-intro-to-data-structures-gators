@@ -50,7 +50,7 @@ public:
 	};
 	bool removeTail() {
 		if (count > 1) {
-			Node* newTail = head->prev;
+			Node* newTail = tail->prev;
 			delete tail;
 			tail = newTail;
 		}
