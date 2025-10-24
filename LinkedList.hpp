@@ -6,8 +6,30 @@ template <typename T>
 class LinkedList {
 public:
 	// Behaviors
-	void printForward() const;
-	void printReverse() const;
+	void printForward() const {
+		if (!count) {
+			cout << "No elements.";
+		}
+
+		Node* printNode = head;
+		cout << printNode.data;
+		while (printNode->next) {
+			cout << printNode.data << endl;
+			printNode = printNode->next;
+		}
+	};
+	void printReverse() const {
+		if (!count) {
+			cout << "No elements.";
+		}
+
+		Node* printNode = tail;
+		cout << printNode.data;
+		while (printNode->prev) {
+			cout << printNode.data << endl;
+			printNode = printNode->prev;
+		}
+	};
 
 	// Accessors
 	[[nodiscard]] unsigned int getCount() const {return count;};
@@ -18,18 +40,20 @@ public:
 
 	// Insertion
 	void addHead(const T& data) {
+		Node* headNode;
 		if (count == 0) {
-			Node* headNode = new Node({data, nullptr, nullptr});
+			headNode = new Node({data, nullptr, nullptr});
 		} else {
-			Node* headNode = new Node({data, nullptr, head});
+			headNode = new Node({data, nullptr, head});
 		}
 		head = headNode;
 	};
 	void addTail(const T& data) {
+		Node* tailNode;
 		if (count == 0) {
-			Node* tailNode = new Node({data, nullptr, nullptr});
+			tailNode = new Node({data, nullptr, nullptr});
 		} else {
-			Node* tailNode = new Node({data, tail, nullptr});
+			tailNode = new Node({data, tail, nullptr});
 			tail->next = tailNode;
 		}
 		tail = tailNode;
