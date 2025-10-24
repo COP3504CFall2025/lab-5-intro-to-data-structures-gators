@@ -44,7 +44,8 @@ public:
 		if (count == 0) {
 			headNode = new Node({data, nullptr, nullptr});
 		} else {
-			headNode = new Node({data, nullptr, head});
+			headNode = new Node({data, nullptr, this->head});
+
 		}
 		head = headNode;
 	};
@@ -53,7 +54,7 @@ public:
 		if (count == 0) {
 			tailNode = new Node({data, nullptr, nullptr});
 		} else {
-			tailNode = new Node({data, tail, nullptr});
+			tailNode = new Node({data, this->tail, nullptr});
 			tail->next = tailNode;
 		}
 		tail = tailNode;
@@ -91,13 +92,16 @@ public:
 	};
 
 	// Operators
-	LinkedList<T>& operator=(LinkedList<T>&& other) noexcept;
-	LinkedList<T>& operator=(const LinkedList<T>& rhs);
+	LinkedList<T>& operator=(LinkedList<T>&& other) noexcept {
+
+	};
+	LinkedList<T>& operator=(const LinkedList<T>& rhs) {
+
+	};
 
 	// Construction/Destruction
-	LinkedList() {
-		
-	};
+	LinkedList() : head(nullptr), tail(nullptr), count(0) {};
+
 	LinkedList(const LinkedList<T>& list) {
 		head = new list.head;
 		Node* aNode = list.head;
@@ -106,7 +110,7 @@ public:
 		}
 		while (aNode->next) {
 			addTail(aNode->next->data);
-			count += 1;
+			count ++;
 		}
 	};
 	LinkedList(LinkedList<T>&& other) noexcept {
