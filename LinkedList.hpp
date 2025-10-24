@@ -45,6 +45,7 @@ public:
 			headNode = new Node({data, nullptr, nullptr});
 		} else {
 			headNode = new Node({data, nullptr, this->head});
+			head->prev = headNode;
 
 		}
 		head = headNode;
