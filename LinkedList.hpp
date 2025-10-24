@@ -43,22 +43,26 @@ public:
 		Node* headNode;
 		if (count == 0) {
 			headNode = new Node({data, nullptr, nullptr});
+			tail = headNode;
 		} else {
 			headNode = new Node({data, nullptr, this->head});
 			head->prev = headNode;
 
 		}
 		head = headNode;
+		count++;
 	};
 	void addTail(const T& data) {
 		Node* tailNode;
 		if (count == 0) {
 			tailNode = new Node({data, nullptr, nullptr});
+			head = tailNode;
 		} else {
 			tailNode = new Node({data, this->tail, nullptr});
 			tail->next = tailNode;
 		}
 		tail = tailNode;
+		count++;
 	}
 
 	// Removal
@@ -67,51 +71,81 @@ public:
 			Node* newHead = head->next;
 			delete head;
 			head = newHead;
+			count--;
+			return true;
 		}
 		if (count == 1) {
 			delete head;
 			head = nullptr;
 			tail = nullptr;
+			count--;
+			return true;
 		}
+		return false;
 	};
 	bool removeTail() {
 		if (count > 1) {
 			Node* newTail = tail->prev;
 			delete tail;
 			tail = newTail;
+			count--;
+			return true;
 		}
 		if (count == 1) {
 			delete tail;
 			head = nullptr;
 			tail = nullptr;
+			count--;
+			return true;
 		}
+		return false;
 	};
 	void Clear() {
-		while (head) {
-			removeHead();
-		}
+		while (removeHead()) {}
 	};
 
 	// Operators
 	LinkedList<T>& operator=(LinkedList<T>&& other) noexcept {
-
+		if (*this == other) {
+			return *this;
+		}
+		Clear();
+		this->head = other.head;
+		this->tail = other.tail;
+		this->count = other.count;
+		other.Clear();
 	};
 	LinkedList<T>& operator=(const LinkedList<T>& rhs) {
+		if (*this == other) {
+			return *this;
+		}
+		Clear();
 
+		Node* iNode;
+		if (iNode) {
+			addHead(list.head->data);
+			count++;
+		}
+		while (iNode->next) {
+			addTail(aNode->next->data);
+			count++;
+			iNode = aNode->next;
+		}
 	};
 
 	// Construction/Destruction
 	LinkedList() : head(nullptr), tail(nullptr), count(0) {};
 
 	LinkedList(const LinkedList<T>& list) {
-		head = new list.head;
-		Node* aNode = list.head;
-		if (aNode) {
+		Node* iNode;
+		if (iNode) {
+			addHead(list.head->data);
 			count++;
 		}
-		while (aNode->next) {
+		while (iNode->next) {
 			addTail(aNode->next->data);
-			count ++;
+			count++;
+			iNode = aNode->next;
 		}
 	};
 	LinkedList(LinkedList<T>&& other) noexcept {
@@ -119,7 +153,6 @@ public:
 		this->tail = other.tail;
 		this->count = other.count;
 		other.Clear();
-
 	};
 	~LinkedList() {
 		Clear();
