@@ -9,7 +9,7 @@ using std::size_t;
 
 template<typename T>
 class ABQ : public QueueInterface<T>{
-
+private:
     size_t capacity_;
     size_t curr_size_;
     T* array_;
@@ -29,7 +29,7 @@ public:
         this->capacity_ = other.capacity_;
 
         for (size_t i = 0; i < other.capacity(); i++) {
-            this->array_[i] = other[i];
+            this->array_[i] = other.array_[i];
         }
     };
     ABQ& operator=(const ABQ& rhs) {
@@ -42,7 +42,7 @@ public:
         this->capacity_ = other.capacity_;
 
         for (size_t i = 0; i < other.capacity_; i++) {
-            this->array_[i] = other[i];
+            this->array_[i] = other.array_[i];
         }
 
         return *this;
@@ -57,7 +57,7 @@ public:
         other.capacity_ = 0;
     };
     ABQ& operator=(ABQ&& rhs) noexcept {
-        if (this == &other) {return *this;}
+        if (this == &rhs) {return *this;}
 
         delete[] this->array_;
 
@@ -66,12 +66,12 @@ public:
         this->capacity_ = other.capacity_;
 
         for (size_t i = 0; i < other.capacity_; i++) {
-            this->array_[i] = other[i];
+            this->array_[i] = other.array_[i];
         }
 
         return *this;
     };
-    ~ABQ() noexcept override {
+    ~ABQ() noexcept {
         delete[] array_;
         array_ = nullptr;
         curr_size_ = 0;

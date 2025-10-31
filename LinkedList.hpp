@@ -139,9 +139,9 @@ public:
 			count++;
 		}
 		while (iNode->next) {
-			AddTail(aNode->next->data);
+			AddTail(iNode->next->data);
 			count++;
-			iNode = aNode->next;
+			iNode = iNode->next;
 		}
 	};
 
@@ -155,9 +155,9 @@ public:
 			count++;
 		}
 		while (iNode->next) {
-			AddTail(aNode->next->data);
+			AddTail(iNode->next->data);
 			count++;
-			iNode = aNode->next;
+			iNode = iNode->next;
 		}
 	};
 	LinkedList(LinkedList<T>&& other) noexcept {

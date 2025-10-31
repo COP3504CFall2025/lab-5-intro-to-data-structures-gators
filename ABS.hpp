@@ -9,6 +9,12 @@ using std::size_t;
 
 template<typename T>
 class ABS : public StackInterface<T> {
+private:
+    size_t capacity_;
+    size_t curr_size_;
+    T* array_;
+    static constexpr size_t scale_factor_ = 2;
+
 public:
     // Big 5 + Parameterized Constructor
     ABS() : array_(new T[1]), capacity_(1), size_(0) {};
@@ -23,7 +29,7 @@ public:
         this->capacity_ = other.capacity_;
 
         for (size_t i = 0; i < other.capacity(); i++) {
-            this->array_[i] = other[i];
+            this->array_[i] = other.array_[i];
         }
     };
     ABS& operator=(const ABS& rhs) {
@@ -36,7 +42,7 @@ public:
         this->capacity_ = other.capacity_;
 
         for (size_t i = 0; i < other.capacity_; i++) {
-            this->array_[i] = other[i];
+            this->array_[i] = other.array_[i];
         }
 
         return *this;
@@ -51,7 +57,7 @@ public:
         other.capacity_ = 0;
     };
     ABS& operator=(ABS&& rhs) noexcept {
-        if (this == &other) {return *this;}
+        if (this == &rhs) {return *this;}
 
         delete[] this->array_;
 
@@ -60,12 +66,12 @@ public:
         this->capacity_ = other.capacity_;
 
         for (size_t i = 0; i < other.capacity_; i++) {
-            this->array_[i] = other[i];
+            this->array_[i] = other.array_[i];
         }
 
         return *this;
     };
-    ~ABS() noexcept override {
+    ~ABS() noexcept {
         delete[] array_;
         array_ = nullptr;
         curr_size_ = 0;
@@ -118,10 +124,4 @@ public:
             array_ = std::move(newData);
         }
     };
-
-private:
-    size_t capacity_;
-    size_t curr_size_;
-    T* array_;
-    static constexpr size_t scale_factor_ = 2;
 };

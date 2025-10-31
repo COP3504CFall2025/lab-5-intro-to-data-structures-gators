@@ -34,8 +34,8 @@ public:
         this->front_ = other.front_;
         this->back_ = other.back_;
 
-        for (size_t i = 0; i < other.capacity(); i++) {
-            this->data_[i] = other[i];
+        for (size_t i = 0; i < other.capacity_; i++) {
+            this->data_[i] = other.data_[i];
         }
     };
     ABDQ(ABDQ&& other) noexcept {
@@ -63,7 +63,7 @@ public:
         this->back_ = other.back_;
 
         for (size_t i = 0; i < other.capacity_; i++) {
-            this->data_[i] = other[i];
+            this->data_[i] = other.data_[i];
         }
 
         return *this;
@@ -87,7 +87,7 @@ public:
 
         return *this;
     };
-    ~ABDQ() override {
+    ~ABDQ() {
         delete[] data_;
         data_ = nullptr;
         size_ = 0;
@@ -101,7 +101,7 @@ public:
         size_++;
         ensureCapacity();
         if (front_ == 0) {
-            front = capacity_-1;
+            front_ = capacity_-1;
         } else {
             front_--;
         }
