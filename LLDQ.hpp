@@ -19,18 +19,18 @@ public:
 
     // Core Insertion Operations
     void pushFront(const T& item) override {
-        list.addHead(item);
+        list.AddHead(item);
     };
     void pushBack(const T& item) override {
-        list.addTail(item);
+        list.AddTail(item);
     };
 
     // Core Removal Operations
     T popFront() override {
-        list.removeHead();
+        list.RemoveHead();
     };
     T popBack() override {
-        list.removeTail();
+        list.RemoveTail();
     };
 
     // Element Accessors

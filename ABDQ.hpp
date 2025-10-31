@@ -171,7 +171,7 @@ public:
     void ensureCapacity() {
         if (capacity_ < size_) {
 
-            size_t oldCapacity = capacity_;
+            std::size_t oldCapacity = capacity_;
 
             // makes the array capacity one if empty
             if (capacity_ == 0) {
@@ -182,7 +182,7 @@ public:
 
             // doubles capacity_ by adding space between the tail and head
             T* newData = new T[capacity_];
-            for (size_t i = 0; i < size_; i++) {
+            for (std::size_t i = 0; i < size_; i++) {
                 newData[i] = std::move(data_[(front_ + i) % oldCapacity]);
             }
 

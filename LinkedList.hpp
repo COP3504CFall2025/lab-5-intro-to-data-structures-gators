@@ -6,7 +6,7 @@ template <typename T>
 class LinkedList {
 public:
 	// Behaviors
-	void printForward() const {
+	void PrintForward() const {
 		if (!count) {
 			cout << "No elements.";
 		}
@@ -18,7 +18,7 @@ public:
 			printNode = printNode->next;
 		}
 	};
-	void printReverse() const {
+	void PrintReverse() const {
 		if (!count) {
 			cout << "No elements.";
 		}
@@ -39,7 +39,7 @@ public:
 	const Node* getTail() const {return tail;};
 
 	// Insertion
-	void addHead(const T& data) {
+	void AddHead(const T& data) {
 		Node* headNode;
 		if (count == 0) {
 			headNode = new Node({data, nullptr, nullptr});
@@ -52,7 +52,7 @@ public:
 		head = headNode;
 		count++;
 	};
-	void addTail(const T& data) {
+	void AddTail(const T& data) {
 		Node* tailNode;
 		if (count == 0) {
 			tailNode = new Node({data, nullptr, nullptr});
@@ -66,7 +66,7 @@ public:
 	}
 
 	// Removal
-	bool removeHead() {
+	bool RemoveHead() {
 		if (count > 1) {
 			Node* newHead = head->next;
 			delete head;
@@ -83,7 +83,7 @@ public:
 		}
 		return false;
 	};
-	bool removeTail() {
+	bool RemoveTail() {
 		if (count > 1) {
 			Node* newTail = tail->prev;
 			delete tail;
@@ -101,7 +101,7 @@ public:
 		return false;
 	};
 	void Clear() {
-		while (removeHead()) {}
+		while (RemoveHead()) {}
 	};
 
 	// Operators
