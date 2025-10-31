@@ -101,7 +101,7 @@ public:
         size_++;
         ensureCapacity();
         if (front_ == 0) {
-            data_[capacity_-1] = item;
+            front = capacity_-1;
         } else {
             front_--;
         }
@@ -121,6 +121,7 @@ public:
     // deletion
     T popFront() override {
         if (size_ != 0) {
+            T formerFront = front();
             size_--;
             if (front_ == capacity_-1) {
                 front_ = 0;
@@ -128,12 +129,14 @@ public:
                 front_++;
             }
             shrinkIfNeeded();
+            return formerFront;
         } else {
             throw std::out_of_range("Array-based deque is empty.");
         }
     };
     T popBack() override {
         if (size_ != 0) {
+            T formerBack = back();
             size_--;
             if (back_ == 0) {
                 back_ = capacity_-1;
@@ -141,6 +144,7 @@ public:
                 back_--;
             }
             shrinkIfNeeded();
+            return formerBack;
         } else {
             throw std::out_of_range("Array-based deque is empty.");
         }
