@@ -100,21 +100,33 @@ public:
     void pushFront(const T& item) override {
         size_++;
         ensureCapacity();
+        if (front_ == 0) {
+            data_[capacity_-1] = item;
+        } else {
+            front_--;
+        }
         data_[front_] = item;
-        front_--;
     };
     void pushBack(const T& item) override {
         size_++;
         ensureCapacity();
         data_[back_] = item;
-        back_++;
+        if (back_ == capacity_) {
+            back_ == 0;
+        } else {
+            back_++;
+        }
     };
 
     // deletion
     T popFront() override {
         if (size_ != 0) {
             size_--;
-            front_++;
+            if (front_ == capacity_-1) {
+                front_ = 0;
+            } else {
+                front_++;
+            }
             shrinkIfNeeded();
         } else {
             throw std::out_of_range("Array-based deque is empty.");
@@ -123,7 +135,11 @@ public:
     T popBack() override {
         if (size_ != 0) {
             size_--;
-            back_--;
+            if (back_ == 0) {
+                back_ = capacity_-1;
+            } else {
+                back_--;
+            }
             shrinkIfNeeded();
         } else {
             throw std::out_of_range("Array-based deque is empty.");
@@ -135,7 +151,11 @@ public:
         return data_[front_];
     };
     const T& back() const override {
-        return data_[back_-1];
+        if (data_ == 0) {
+            return data_[capacity_-1];
+        } else {
+            return data_[back_-1];
+        }
     };
 
     // getters
@@ -147,7 +167,7 @@ public:
     void ensureCapacity() {
         if (capacity_ < size_) {
 
-            size_t frontDifferential = capacity_-front_;
+            size_t oldCapacity = capacity_;
 
             // makes the array capacity one if empty
             if (capacity_ == 0) {
@@ -158,14 +178,12 @@ public:
 
             // doubles capacity_ by adding space between the tail and head
             T* newData = new T[capacity_];
-            for (size_t i = 0; i < back_; i++) {
-                newData[i] = std::move(data_[i]);
-            }
-            for (size_t i = 0; i >= front_; i++) {
-                newData[i-(capacity_-1)] = std::move(data_[i]);
+            for (size_t i = 0; i < size_; i++) {
+                newData[i] = std::move(data_[(front_ + i) % oldCapacity]);
             }
 
-            front_ = capacity_-frontDifferential;
+            front_ = 0;
+            back_ = size_;
 
             delete[] data_;
             data_ = std::move(newData);
@@ -176,19 +194,17 @@ public:
     void shrinkIfNeeded() {
         if (size_ < capacity_ / SCALE_FACTOR) {
 
-            size_t frontDifferential = capacity_-front_;
+            size_t oldCapacity = capacity_;
             capacity_ /= 2;
 
             // halves capacity_ by removing space between the tail and head
             T* newData = new T[capacity_];
-            for (size_t i = 0; i < back_; i++) {
-                newData[i] = std::move(data_[i]);
-            }
-            for (size_t i = 0; i >= front_; i++) {
-                newData[i-(capacity_-1)] = std::move(data_[i]);
+            for (size_t i = 0; i < size_; i++) {
+                newData[i] = std::move(data_[(front_ + i) % oldCapacity]);
             }
 
-            front_ = capacity_-frontDifferential;
+            front_ = 0;
+            back_ = size_;
 
             delete[] data_;
             data_ = std::move(newData);
