@@ -26,8 +26,8 @@ template <typename T>
 class DequeInterface {
     virtual void pushFront(const T& item);
     virtual void pushBack(const T& item);
-    virtual T popFront() override;
-    virtual T popBack() override;
+    virtual T popFront();
+    virtual T popBack();
     virtual const T& front() const;
     virtual const T& back() const;
     virtual std::size_t getSize() const noexcept;
