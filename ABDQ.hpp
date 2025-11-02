@@ -151,7 +151,7 @@ public:
         if (size_ == 0) {
             throw std::runtime_error("Array-based deque is empty.");
         } else {
-            return data_[front_]->data;
+            return data_[front_];
         }
     };
     const T& back() const override {
@@ -159,9 +159,9 @@ public:
             throw std::runtime_error("Array-based deque is empty.");
         } else {
             if (back_ == 0) {
-                return data_[capacity_-1]->data;
+                return data_[capacity_-1];
             } else {
-                return data_[back_-1]->data;
+                return data_[back_-1];
             }
         }
     };
