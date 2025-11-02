@@ -123,11 +123,7 @@ public:
         if (size_ != 0) {
             T formerFront = front();
             size_--;
-            if (front_ == capacity_-1) {
-                front_ = 0;
-            } else {
-                front_++;
-            }
+            front_ = (front_ + 1) % capacity_
             shrinkIfNeeded();
             return formerFront;
         } else {
@@ -139,7 +135,7 @@ public:
             T formerBack = back();
             size_--;
             if (back_ == 0) {
-                back_ = capacity_-1;
+                back_ = capacity_;
             } else {
                 back_--;
             }
