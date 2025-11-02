@@ -137,7 +137,7 @@ public:
 		}
 		clear();
 
-		Node* iNode;
+		Node* iNode = head;
 		if (rhs.head) {
 			addHead(rhs.head->data);
 			count++;
@@ -155,7 +155,7 @@ public:
 	LinkedList() : head(nullptr), tail(nullptr), count(0) {};
 
 	LinkedList(const LinkedList<T>& list) {
-		Node* iNode;
+		Node* iNode = head;
 		if (iNode) {
 			addHead(list.head->data);
 			count++;
