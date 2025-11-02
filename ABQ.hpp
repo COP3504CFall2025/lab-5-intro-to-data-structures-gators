@@ -137,13 +137,9 @@ public:
     // Deletion
     T dequeue() override {
         if (curr_size_ != 0) {
-            T formerBack = back();
+            T formerFront = front_;
             curr_size_--;
-            if (back_ == 0) {
-                back_ = capacity_-1;
-            } else {
-                back_--;
-            }
+            front_ = (front_ + 1) % capacity_;
 
             if (curr_size_ < capacity_ / scale_factor_) {
 
@@ -163,7 +159,7 @@ public:
                 array_ = std::move(newData);
             }
 
-            return formerBack;
+            return formerFront;
         } else {
             throw std::runtime_error("Array-based queue is empty.");
         }
