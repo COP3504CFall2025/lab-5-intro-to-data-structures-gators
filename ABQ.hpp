@@ -61,6 +61,10 @@ public:
         this->curr_size_ = rhs.curr_size_;
         this->capacity_ = rhs.capacity_;
 
+        rhs.array_ = nullptr;
+        rhs.curr_size_ = 0;
+        rhs.capacity_ = 0;
+
         return *this;
     };
     ~ABQ() noexcept {
@@ -101,7 +105,7 @@ public:
         if (curr_size_ == 0) {
             throw std::runtime_error("Array-based queue is empty.");
         } else {
-            return array_[capacity_-curr_size_];
+            return array_[capacity_-curr_size_-1];
         }
     };
 

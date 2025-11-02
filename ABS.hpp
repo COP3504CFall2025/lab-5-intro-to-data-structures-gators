@@ -60,6 +60,10 @@ public:
         this->array_ = rhs.array_;
         this->curr_size_ = rhs.curr_size_;
         this->capacity_ = rhs.capacity_;
+        
+        rhs.array_ = nullptr;
+        rhs.curr_size_ = 0;
+        rhs.capacity_ = 0;
 
         return *this;
     };
