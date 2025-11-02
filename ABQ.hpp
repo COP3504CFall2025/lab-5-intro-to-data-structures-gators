@@ -120,8 +120,9 @@ public:
             delete[] array_;
             array_ = std::move(newData);
         }
-        array_[curr_size_] = data;
         curr_size_++;
+        data_[back_] = data;
+        back_ = (back_ + 1) % capacity_;
     };
 
     // Access
