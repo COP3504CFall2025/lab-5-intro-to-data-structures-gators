@@ -98,8 +98,8 @@ public:
 
     // insertion
     void pushFront(const T& item) override {
-        size_++;
         ensureCapacity();
+        size_++;
         if (front_ == 0) {
             front_ = capacity_-1;
         } else {
@@ -108,8 +108,8 @@ public:
         data_[front_] = item;
     };
     void pushBack(const T& item) override {
-        size_++;
         ensureCapacity();
+        size_++;
         data_[back_] = item;
         if (back_ == capacity_) {
             back_ = 0;
@@ -173,7 +173,7 @@ public:
 
     // resizes to capacity_ * 2
     void ensureCapacity() {
-        if (capacity_ < size_) {
+        if (capacity_ == size_) {
 
             std::size_t oldCapacity = capacity_;
 
@@ -182,19 +182,19 @@ public:
                 capacity_ = 1;
             } else {
                 capacity_ *= SCALE_FACTOR;
-
-                // doubles capacity_ by adding space between the tail and head
-                T* newData = new T[capacity_];
-                for (std::size_t i = 0; i < size_; i++) {
-                    newData[i] = std::move(data_[(front_ + i) % oldCapacity]);
-                }
-
-                front_ = 0;
-                back_ = size_;
-
-                delete[] data_;
-                data_ = std::move(newData);
             }
+
+            // doubles capacity_ by adding space between the tail and head
+            T* newData = new T[capacity_];
+            for (std::size_t i = 0; i < size_; i++) {
+                newData[i] = std::move(data_[(front_ + i) % oldCapacity]);
+            }
+
+            front_ = 0;
+            back_ = size_;
+
+            delete[] data_;
+            data_ = std::move(newData);
         }
     }
 

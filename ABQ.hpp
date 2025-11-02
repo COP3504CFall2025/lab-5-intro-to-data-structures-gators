@@ -91,14 +91,15 @@ public:
                 capacity_ = 1;
             } else {
                 capacity_ *= scale_factor_;
-                T* newData = new T[capacity_];
-                for (size_t i = 0; i < capacity_ / scale_factor_; i++) {
-                    newData[i] = std::move(array_[i]);
-                }
-                
-                delete[] array_;
-                array_ = std::move(newData);
             }
+
+            T* newData = new T[capacity_];
+            for (size_t i = 0; i < capacity_ / scale_factor_; i++) {
+                newData[i] = std::move(array_[i]);
+            }
+            
+            delete[] array_;
+            array_ = std::move(newData);
         }
         array_[curr_size_-1] = data;
     };
