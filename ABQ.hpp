@@ -13,20 +13,18 @@ private:
     size_t capacity_;
     size_t curr_size_;
     size_t front_;
-    size_t back_;
     T* array_;
     static constexpr size_t scale_factor_ = 2;
 
 public:
     // Constructors + Big 5
-    ABQ() : capacity_(1), curr_size_(0), front_(0), back_(0), array_(new T[1]) {};
-    explicit ABQ(const size_t capacity) : capacity_(capacity), curr_size_(0), front_(0), back_(0), array_(new T[capacity]) {};
+    ABQ() : capacity_(1), curr_size_(0), front_(0), array_(new T[1]) {};
+    explicit ABQ(const size_t capacity) : capacity_(capacity), curr_size_(0), front_(0), array_(new T[capacity]) {};
     ABQ(const ABQ& other)  {
         this->array_ = new T[other.capacity_];
         this->curr_size_ = other.curr_size_;
         this->capacity_ = other.capacity_;
         this->front_ = other.front_;
-        this->back_ = other.back_;
 
         for (size_t i = 0; i < other.capacity_; i++) {
             this->array_[i] = other.array_[i];
@@ -41,7 +39,6 @@ public:
         this->curr_size_ = rhs.curr_size_;
         this->capacity_ = rhs.capacity_;
         this->front_ = rhs.front_;
-        this->back_ = rhs.back_;
 
         for (size_t i = 0; i < rhs.capacity_; i++) {
             this->array_[i] = rhs.array_[i];
@@ -54,13 +51,11 @@ public:
         this->curr_size_ = other.curr_size_;
         this->capacity_ = other.capacity_;
         this->front_ = other.front_;
-        this->back_ = other.back_;
 
         other.array_ = nullptr;
         other.curr_size_ = 0;
         other.capacity_ = 0;
         other.front_ = 0;
-        other.back_ = 0;
     };
     ABQ& operator=(ABQ&& rhs) noexcept {
         if (this == &rhs) {return *this;}
@@ -71,13 +66,11 @@ public:
         this->curr_size_ = rhs.curr_size_;
         this->capacity_ = rhs.capacity_;
         this->front_ = rhs.front_;
-        this->back_ = rhs.back_;
 
         rhs.array_ = nullptr;
         rhs.curr_size_ = 0;
         rhs.capacity_ = 0;
         rhs.front_ = 0;
-        rhs.back_ = 0;
 
         return *this;
     };
@@ -87,7 +80,6 @@ public:
         curr_size_ = 0;
         capacity_ = 0;
         front_ = 0;
-        back_ = 0;
     };
 
     // Getters
@@ -99,6 +91,8 @@ public:
     void enqueue(const T& data) override {
         if (capacity_ == curr_size_) {
 
+            std::size_t oldCapacity = capacity_;
+
             // makes the array capacity one if empty
             if (capacity_ == 0) {
                 capacity_ = 1;
@@ -109,16 +103,15 @@ public:
             // doubles capacity_ by adding space between the tail and head
             T* newData = new T[capacity_];
             for (std::size_t i = 0; i < curr_size_; i++) {
-                newData[i] = std::move(array_[i]);
+                newData[i] = std::move(array_[(front_ + i) % oldCapacity]);
             }
 
             front_ = 0;
-            back_ = curr_size_;
 
             delete[] array_;
             array_ = std::move(newData);
         }
-        array_[curr_size_] = data;
+        array_[(front_ + curr_size_) % capacity_] = data;
         curr_size_++;
     };
 
@@ -133,21 +126,32 @@ public:
 
     // Deletion
     T dequeue() override {
-        T formerFront = array_[0];
-        curr_size_--;
         if (curr_size_ != 0) {
-            // shifts the array
-            T* newData = new T[capacity_-1];
-            for (size_t i = 0; i < curr_size_; i++) {
-                newData[i] = std::move(array_[i+1]);
+            T formerFront = array_[front_];
+            curr_size_--;
+            front_ = (front_ + 1) % capacity_;
+
+            if (curr_size_ < capacity_ / scale_factor_) {
+
+                size_t oldCapacity = capacity_;
+                capacity_ /= 2;
+
+                // halves capacity_ by removing space between the tail and head
+                T* newData = new T[capacity_];
+                for (size_t i = 0; i < curr_size_; i++) {
+                    newData[i] = std::move(array_[(front_ + i) % oldCapacity]);
+                }
+
+                front_ = 0;
+
+                delete[] array_;
+                array_ = std::move(newData);
             }
 
-            delete[] array_;
-            array_ = std::move(newData);
             return formerFront;
         } else {
             throw std::runtime_error("Array-based queue is empty.");
-        } 
+        }
     };
 
 };
