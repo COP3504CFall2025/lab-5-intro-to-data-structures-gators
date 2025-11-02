@@ -131,7 +131,7 @@ public:
             shrinkIfNeeded();
             return formerFront;
         } else {
-            throw std::out_of_range("Array-based deque is empty.");
+            throw std::runtime_error("Array-based deque is empty.");
         }
     };
     T popBack() override {
@@ -146,7 +146,7 @@ public:
             shrinkIfNeeded();
             return formerBack;
         } else {
-            throw std::out_of_range("Array-based deque is empty.");
+            throw std::runtime_error("Array-based deque is empty.");
         }
     };
 

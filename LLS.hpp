@@ -20,16 +20,16 @@ public:
 
     // Deletion
     T pop() override {
-        list.removeTail();
+        return list.removeTail();
     };
 
     // Access
     T peek() const override {
-        list.getTail();
+        return list.getTail();
     };
 
     //Getters
     std::size_t getSize() const noexcept override {
-        list.getCount();
+        return list.getCount();
     };
 };

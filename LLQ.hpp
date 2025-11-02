@@ -20,16 +20,16 @@ public:
 
     // Deletion
     T dequeue() override {
-        list.removeHead();
+        return list.removeHead();
     };
 
     // Access
     T peek() const override {
-        list.getHead();
+        return list.getHead();
     };
 
     // Getter
     std::size_t getSize() const noexcept override {
-        list.getCount();
+        return list.getCount();
     };
 };

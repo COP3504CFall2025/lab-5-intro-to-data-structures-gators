@@ -112,17 +112,21 @@ public:
     };
 
     T pop() override {
-        T formerVal = peek();
-        curr_size_--;
-        if (curr_size_ < capacity_ / scale_factor_) {
-            capacity_ /= scale_factor_;
-            T* newData = new T[capacity_];
-            for (size_t i = 0; i < capacity_; i++) {
-                newData[i] = std::move(array_[i]);
+        if (curr_size_ != 0) {
+            T formerVal = peek();
+            curr_size_--;
+            if (curr_size_ < capacity_ / scale_factor_) {
+                capacity_ /= scale_factor_;
+                T* newData = new T[capacity_];
+                for (size_t i = 0; i < capacity_; i++) {
+                    newData[i] = std::move(array_[i]);
+                }
+                delete[] array_;
+                array_ = std::move(newData);
             }
-            delete[] array_;
-            array_ = std::move(newData);
+            return formerVal;
+        } else {
+            throw std::runtime_error("Array-based stack is empty.");
         }
-        return formerVal;
     };
 };

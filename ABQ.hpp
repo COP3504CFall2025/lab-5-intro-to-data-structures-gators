@@ -110,16 +110,21 @@ public:
 
     // Deletion
     T dequeue() override {
-        T formerVal = peek();
-        curr_size_--;
-        if (curr_size_ < capacity_ / scale_factor_) {
-            capacity_ /= scale_factor_;
-            T* newData = new T[capacity_];
-            for (size_t i = 0; i < capacity_; i++) {
-                newData[(capacity_-1)-i] = std::move(array_[(capacity_*scale_factor_-1)-i]);
+        if (curr_size_ != 0) {
+            T formerVal = peek();
+            curr_size_--;
+            if (curr_size_ < capacity_ / scale_factor_) {
+                capacity_ /= scale_factor_;
+                T* newData = new T[capacity_];
+                for (size_t i = 0; i < capacity_; i++) {
+                    newData[(capacity_-1)-i] = std::move(array_[(capacity_*scale_factor_-1)-i]);
+                }
+                delete[] array_;
+                array_ = std::move(newData);
             }
-            delete[] array_;
-            array_ = std::move(newData);
+            return formerVal;
+        } else {
+            throw std::runtime_error("Array-based queue is empty.");
         }
     };
 

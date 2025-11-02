@@ -23,9 +23,9 @@ public:
 		}
 
 		Node* printNode = head;
-		cout << printNode.data;
+		cout << printNode->data;
 		while (printNode->next) {
-			cout << printNode.data << endl;
+			cout << printNode->data << endl;
 			printNode = printNode->next;
 		}
 	};
@@ -35,9 +35,9 @@ public:
 		}
 
 		Node* printNode = tail;
-		cout << printNode.data;
+		cout << printNode->data;
 		while (printNode->prev) {
-			cout << printNode.data << endl;
+			cout << printNode->data << endl;
 			printNode = printNode->prev;
 		}
 	};
