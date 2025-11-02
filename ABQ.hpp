@@ -135,22 +135,36 @@ public:
 
     // Deletion
     T dequeue() override {
-        if (curr_size_ < capacity_ / scale_factor_) {
-
-            size_t oldCapacity = capacity_;
-            capacity_ /= 2;
-
-            // halves capacity_ by removing space between the tail and head
-            T* newData = new T[capacity_];
-            for (size_t i = 0; i < curr_size_; i++) {
-                newData[i] = std::move(array_[(front_ + i) % oldCapacity]);
+        if (curr_size_ != 0) {
+            T formerBack = back();
+            curr_size_--;
+            if (back_ == 0) {
+                back_ = capacity_-1;
+            } else {
+                back_--;
             }
 
-            front_ = 0;
-            back_ = curr_size_;
+            if (curr_size_ < capacity_ / scale_factor_) {
 
-            delete[] array_;
-            array_ = std::move(newData);
+                size_t oldCapacity = capacity_;
+                capacity_ /= 2;
+
+                // halves capacity_ by removing space between the tail and head
+                T* newData = new T[capacity_];
+                for (size_t i = 0; i < curr_size_; i++) {
+                    newData[i] = std::move(array_[(front_ + i) % oldCapacity]);
+                }
+
+                front_ = 0;
+                back_ = curr_size_;
+
+                delete[] array_;
+                array_ = std::move(newData);
+            }
+
+            return formerBack;
+        } else {
+            throw std::runtime_error("Array-based queue is empty.");
         }
     };
 
