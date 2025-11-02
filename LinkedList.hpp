@@ -56,7 +56,7 @@ public:
 			headNode = new Node({data, nullptr, nullptr});
 			tail = headNode;
 		} else {
-			headNode = new Node({data, nullptr, this->head});
+			headNode = new Node({data, nullptr, getHead()});
 			head->prev = headNode;
 
 		}
@@ -69,7 +69,7 @@ public:
 			tailNode = new Node({data, nullptr, nullptr});
 			head = tailNode;
 		} else {
-			tailNode = new Node({data, this->tail, nullptr});
+			tailNode = new Node({data, getTail(), nullptr});
 			tail->next = tailNode;
 		}
 		tail = tailNode;
@@ -82,6 +82,7 @@ public:
 			Node* newHead = head->next;
 			delete head;
 			head = newHead;
+			head->prev = nullptr;
 			count--;
 			return true;
 		}
@@ -99,6 +100,7 @@ public:
 			Node* newTail = tail->prev;
 			delete tail;
 			tail = newTail;
+			tail->next = nullptr;
 			count--;
 			return true;
 		}
