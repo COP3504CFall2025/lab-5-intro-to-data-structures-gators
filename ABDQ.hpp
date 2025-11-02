@@ -154,7 +154,7 @@ public:
         if (size_ == 0) {
             throw std::runtime_error("Array-based deque is empty.");
         } else {
-            return data_[back_];
+            return data_[back_-1];
         }
     };
 
