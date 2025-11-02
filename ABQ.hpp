@@ -12,17 +12,21 @@ class ABQ : public QueueInterface<T>{
 private:
     size_t capacity_;
     size_t curr_size_;
+    size_t front_;
+    size_t back_;
     T* array_;
     static constexpr size_t scale_factor_ = 2;
 
 public:
     // Constructors + Big 5
-    ABQ() : capacity_(1), curr_size_(0), array_(new T[1]) {};
-    explicit ABQ(const size_t capacity) : capacity_(capacity), curr_size_(0), array_(new T[capacity]) {};
-    ABQ(const ABQ& other) {
+    ABQ() : capacity_(1), curr_size_(0), front_(0), back_(0), array_(new T[1]) {};
+    explicit ABQ(const size_t capacity) : capacity_(capacity), curr_size_(0), front_(0), back_(0), array_(new T[capacity]) {};
+    ABQ(const ABQ& other)  {
         this->array_ = new T[other.capacity_];
         this->curr_size_ = other.curr_size_;
         this->capacity_ = other.capacity_;
+        this->front_ = other.front_;
+        this->back_ = other.back_;
 
         for (size_t i = 0; i < other.capacity_; i++) {
             this->array_[i] = other.array_[i];
@@ -36,6 +40,8 @@ public:
         this->array_ = new T[rhs.capacity_];
         this->curr_size_ = rhs.curr_size_;
         this->capacity_ = rhs.capacity_;
+        this->front_ = rhs.front_;
+        this->back_ = rhs.back_;
 
         for (size_t i = 0; i < rhs.capacity_; i++) {
             this->array_[i] = rhs.array_[i];
@@ -47,10 +53,14 @@ public:
         this->array_ = other.array_;
         this->curr_size_ = other.curr_size_;
         this->capacity_ = other.capacity_;
+        this->front_ = other.front_;
+        this->back_ = other.back_;
 
         other.array_ = nullptr;
         other.curr_size_ = 0;
         other.capacity_ = 0;
+        other.front_ = 0;
+        other.back_ = 0;
     };
     ABQ& operator=(ABQ&& rhs) noexcept {
         if (this == &rhs) {return *this;}
@@ -60,10 +70,14 @@ public:
         this->array_ = rhs.array_;
         this->curr_size_ = rhs.curr_size_;
         this->capacity_ = rhs.capacity_;
+        this->front_ = rhs.front_;
+        this->back_ = rhs.back_;
 
         rhs.array_ = nullptr;
         rhs.curr_size_ = 0;
         rhs.capacity_ = 0;
+        rhs.front_ = 0;
+        rhs.back_ = 0;
 
         return *this;
     };
@@ -72,6 +86,8 @@ public:
         array_ = nullptr;
         curr_size_ = 0;
         capacity_ = 0;
+        front_ = 0;
+        back_ = 0;
     };
 
     // Getters
@@ -82,19 +98,25 @@ public:
     // Insertion
     void enqueue(const T& data) override {
         if (capacity_ == curr_size_) {
-            size_t oldCapacity = capacity_;
 
+            std::size_t oldCapacity = capacity_;
+
+            // makes the array capacity one if empty
             if (capacity_ == 0) {
                 capacity_ = 1;
             } else {
                 capacity_ *= scale_factor_;
             }
 
+            // doubles capacity_ by adding space between the tail and head
             T* newData = new T[capacity_];
-            for (size_t i = 0; i < oldCapacity; i++) {
-                newData[(capacity_-1)-i] = std::move(array_[(oldCapacity-1)-i]);
+            for (std::size_t i = 0; i < size_; i++) {
+                newData[i] = std::move(array_[(front_ + i) % oldCapacity]);
             }
-            
+
+            front_ = 0;
+            back_ = curr_size_;
+
             delete[] array_;
             array_ = std::move(newData);
         }
@@ -107,28 +129,28 @@ public:
         if (curr_size_ == 0) {
             throw std::runtime_error("Array-based queue is empty.");
         } else {
-            return array_[capacity_-curr_size_];
+            return array_[front_];
         }
     };
 
     // Deletion
     T dequeue() override {
-        if (curr_size_ != 0) {
-            T formerVal = peek();
-            curr_size_--;
-            if (curr_size_ < capacity_ / scale_factor_) {
-                size_t oldCapacity = capacity_;
-                capacity_ /= scale_factor_;
-                T* newData = new T[capacity_];
-                for (size_t i = 0; i < capacity_; i++) {
-                    newData[(capacity_-1)-i] = std::move(array_[(oldCapacity-1)-i]);
-                }
-                delete[] array_;
-                array_ = std::move(newData);
+        if (curr_size_ < capacity_ / scale_factor_) {
+
+            size_t oldCapacity = capacity_;
+            capacity_ /= 2;
+
+            // halves capacity_ by removing space between the tail and head
+            T* newData = new T[capacity_];
+            for (size_t i = 0; i < curr_size_; i++) {
+                newData[i] = std::move(array_[(front_ + i) % oldCapacity]);
             }
-            return formerVal;
-        } else {
-            throw std::runtime_error("Array-based queue is empty.");
+
+            front_ = 0;
+            back_ = curr_size_;
+
+            delete[] array_;
+            array_ = std::move(newData);
         }
     };
 
