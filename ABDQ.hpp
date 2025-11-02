@@ -112,7 +112,7 @@ public:
         ensureCapacity();
         data_[back_] = item;
         if (back_ == capacity_) {
-            back_ == 0;
+            back_ = 0;
         } else {
             back_++;
         }
@@ -151,7 +151,7 @@ public:
         if (size_ == 0) {
             throw std::runtime_error("Array-based deque is empty.");
         } else {
-            return data_[front_];
+            return data_[front_]->data;
         }
     };
     const T& back() const override {
@@ -159,9 +159,9 @@ public:
             throw std::runtime_error("Array-based deque is empty.");
         } else {
             if (back_ == 0) {
-                return data_[capacity_-1];
+                return data_[capacity_-1]->data;
             } else {
-                return data_[back_-1];
+                return data_[back_-1]->data;
             }
         }
     };
