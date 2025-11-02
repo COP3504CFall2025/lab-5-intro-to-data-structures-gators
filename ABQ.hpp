@@ -110,7 +110,7 @@ public:
 
             // doubles capacity_ by adding space between the tail and head
             T* newData = new T[capacity_];
-            for (std::size_t i = 0; i < size_; i++) {
+            for (std::size_t i = 0; i < curr_size_; i++) {
                 newData[i] = std::move(array_[(front_ + i) % oldCapacity]);
             }
 
@@ -121,7 +121,7 @@ public:
             array_ = std::move(newData);
         }
         curr_size_++;
-        data_[back_] = data;
+        array_[back_] = data;
         back_ = (back_ + 1) % capacity_;
     };
 
@@ -137,7 +137,7 @@ public:
     // Deletion
     T dequeue() override {
         if (curr_size_ != 0) {
-            T formerFront = front_;
+            T formerFront = array_[front_];
             curr_size_--;
             front_ = (front_ + 1) % capacity_;
 
