@@ -82,6 +82,8 @@ public:
     // Insertion
     void enqueue(const T& data) override {
         if (capacity_ == curr_size_) {
+            size_t oldCapacity = capacity_;
+
             if (capacity_ == 0) {
                 capacity_ = 1;
             } else {
@@ -89,8 +91,8 @@ public:
             }
 
             T* newData = new T[capacity_];
-            for (size_t i = 0; i < capacity_ / scale_factor_; i++) {
-                newData[i] = std::move(array_[i]);
+            for (size_t i = 0; i < oldCapacity; i++) {
+                newData[(capacity_-1)-i] = std::move(array_[(oldCapacity-1)-i]);
             }
             
             delete[] array_;
