@@ -23,7 +23,7 @@ public:
     explicit ABDQ(std::size_t capacity) {
         this->data_ = new T[capacity];
         this->capacity_ = capacity;
-        this->size_ = capacity;
+        this->size_ = 0;
         this->front_ = 0;
         this->back_ = 0;
     };
@@ -155,7 +155,7 @@ public:
         return data_[front_];
     };
     const T& back() const override {
-        if (data_ == 0) {
+        if (back_ == 0) {
             return data_[capacity_-1];
         } else {
             return data_[back_-1];
@@ -178,19 +178,19 @@ public:
                 capacity_ = 1;
             } else {
                 capacity_ *= SCALE_FACTOR;
+
+                // doubles capacity_ by adding space between the tail and head
+                T* newData = new T[capacity_];
+                for (std::size_t i = 0; i < size_; i++) {
+                    newData[i] = std::move(data_[(front_ + i) % oldCapacity]);
+                }
+
+                front_ = 0;
+                back_ = size_;
+
+                delete[] data_;
+                data_ = std::move(newData);
             }
-
-            // doubles capacity_ by adding space between the tail and head
-            T* newData = new T[capacity_];
-            for (std::size_t i = 0; i < size_; i++) {
-                newData[i] = std::move(data_[(front_ + i) % oldCapacity]);
-            }
-
-            front_ = 0;
-            back_ = size_;
-
-            delete[] data_;
-            data_ = std::move(newData);
         }
     }
 
