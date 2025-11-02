@@ -24,7 +24,7 @@ public:
         this->curr_size_ = other.curr_size_;
         this->capacity_ = other.capacity_;
 
-        for (size_t i = 0; i < other.capacity(); i++) {
+        for (size_t i = 0; i < other.capacity_; i++) {
             this->array_[i] = other.array_[i];
         }
     };
@@ -105,7 +105,7 @@ public:
         if (curr_size_ == 0) {
             throw std::runtime_error("Array-based queue is empty.");
         } else {
-            return array_[capacity_-curr_size_-1];
+            return array_[capacity_-curr_size_];
         }
     };
 
@@ -115,10 +115,11 @@ public:
             T formerVal = peek();
             curr_size_--;
             if (curr_size_ < capacity_ / scale_factor_) {
+                size_t oldCapacity = capacity_;
                 capacity_ /= scale_factor_;
                 T* newData = new T[capacity_];
                 for (size_t i = 0; i < capacity_; i++) {
-                    newData[(capacity_-1)-i] = std::move(array_[(capacity_*scale_factor_-1)-i]);
+                    newData[(capacity_-1)-i] = std::move(array_[(oldCapacity-1)-i]);
                 }
                 delete[] array_;
                 array_ = std::move(newData);
