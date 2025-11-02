@@ -15,12 +15,12 @@ public:
 
     // Insertion
     void enqueue(const T& item) override {
-        list.AddTail(item);
+        list.addTail(item);
     };
 
     // Deletion
     T dequeue() override {
-        list.RemoveHead();
+        list.removeHead();
     };
 
     // Access

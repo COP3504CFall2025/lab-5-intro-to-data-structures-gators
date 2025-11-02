@@ -17,7 +17,7 @@ private:
 	unsigned int count;
 public:
 	// Behaviors
-	void PrintForward() const {
+	void printForward() const {
 		if (!count) {
 			cout << "No elements.";
 		}
@@ -29,7 +29,7 @@ public:
 			printNode = printNode->next;
 		}
 	};
-	void PrintReverse() const {
+	void printReverse() const {
 		if (!count) {
 			cout << "No elements.";
 		}
@@ -50,7 +50,7 @@ public:
 	const Node* getTail() const {return tail;};
 
 	// Insertion
-	void AddHead(const T& data) {
+	void addHead(const T& data) {
 		Node* headNode;
 		if (count == 0) {
 			headNode = new Node({data, nullptr, nullptr});
@@ -63,7 +63,7 @@ public:
 		head = headNode;
 		count++;
 	};
-	void AddTail(const T& data) {
+	void addTail(const T& data) {
 		Node* tailNode;
 		if (count == 0) {
 			tailNode = new Node({data, nullptr, nullptr});
@@ -77,7 +77,7 @@ public:
 	}
 
 	// Removal
-	bool RemoveHead() {
+	bool removeHead() {
 		if (count > 1) {
 			Node* newHead = head->next;
 			delete head;
@@ -94,7 +94,7 @@ public:
 		}
 		return false;
 	};
-	bool RemoveTail() {
+	bool removeTail() {
 		if (count > 1) {
 			Node* newTail = tail->prev;
 			delete tail;
@@ -112,7 +112,7 @@ public:
 		return false;
 	};
 	void Clear() {
-		while (RemoveHead()) {}
+		while (removeHead()) {}
 	};
 
 	// Operators
@@ -135,11 +135,11 @@ public:
 
 		Node* iNode;
 		if (iNode) {
-			AddHead(list.head->data);
+			addHead(list.head->data);
 			count++;
 		}
 		while (iNode->next) {
-			AddTail(iNode->next->data);
+			addTail(iNode->next->data);
 			count++;
 			iNode = iNode->next;
 		}
@@ -155,7 +155,7 @@ public:
 			count++;
 		}
 		while (iNode->next) {
-			AddTail(iNode->next->data);
+			addTail(iNode->next->data);
 			count++;
 			iNode = iNode->next;
 		}

@@ -97,7 +97,7 @@ public:
                 capacity_ *= scale_factor_;
             }
 
-            int* newData = new T[capacity_];
+            T* newData = new T[capacity_];
             for (size_t i = 0; i < capacity_ / scale_factor_; i++) {
                 newData[i] = std::move(array_[i]);
             }
