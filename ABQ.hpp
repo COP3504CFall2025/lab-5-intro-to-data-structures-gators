@@ -111,6 +111,7 @@ public:
 
     // Deletion
     T dequeue() override {
+        T formerVal = peek();
         curr_size_--;
         if (curr_size_ < capacity_ / scale_factor_) {
             capacity_ /= scale_factor_;

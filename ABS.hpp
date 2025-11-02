@@ -113,6 +113,7 @@ public:
     };
 
     T pop() override {
+        T formerVal = peek();
         curr_size_--;
         if (curr_size_ < capacity_ / scale_factor_) {
             capacity_ /= scale_factor_;
@@ -123,5 +124,6 @@ public:
             delete[] array_;
             array_ = std::move(newData);
         }
+        return formerVal;
     };
 };
