@@ -85,8 +85,7 @@ public:
 
     // Insertion
     void enqueue(const T& data) override {
-        curr_size_++;
-        if (capacity_ < curr_size_) {
+        if (capacity_ == curr_size_) {
             if (capacity_ == 0) {
                 capacity_ = 1;
             } else {
@@ -101,7 +100,8 @@ public:
             delete[] array_;
             array_ = std::move(newData);
         }
-        array_[curr_size_-1] = data;
+        array_[curr_size_] = data;
+        curr_size_++;
     };
 
     // Access
