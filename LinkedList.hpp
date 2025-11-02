@@ -111,7 +111,7 @@ public:
 		}
 		return false;
 	};
-	void Clear() {
+	void clear() {
 		while (removeHead()) {}
 	};
 
@@ -120,22 +120,22 @@ public:
 		if (*this == other) {
 			return *this;
 		}
-		Clear();
+		clear();
 		
 		this->head = other.head;
 		this->tail = other.tail;
 		this->count = other.count;
-		other.Clear();
+		other.clear();
 	};
 	LinkedList<T>& operator=(const LinkedList<T>& rhs) {
-		if (*this == other) {
+		if (*this == rhs) {
 			return *this;
 		}
-		Clear();
+		clear();
 
 		Node* iNode;
-		if (iNode) {
-			addHead(list.head->data);
+		if (rhs.head) {
+			addHead(rhs.head->data);
 			count++;
 		}
 		while (iNode->next) {
@@ -151,7 +151,7 @@ public:
 	LinkedList(const LinkedList<T>& list) {
 		Node* iNode;
 		if (iNode) {
-			AddHead(list.head->data);
+			addHead(list.head->data);
 			count++;
 		}
 		while (iNode->next) {
@@ -164,10 +164,10 @@ public:
 		this->head = other.head;
 		this->tail = other.tail;
 		this->count = other.count;
-		other.Clear();
+		other.clear();
 	};
 	~LinkedList() {
-		Clear();
+		clear();
 	};
 };
 
