@@ -20,12 +20,14 @@ public:
 
     // Deletion
     T dequeue() override {
-        return list.removeHead();
+        T datum = peek();
+        list.removeHead();
+        return datum;
     };
 
     // Access
     T peek() const override {
-        return list.getHead();
+        return list.getHead()->data;
     };
 
     // Getter

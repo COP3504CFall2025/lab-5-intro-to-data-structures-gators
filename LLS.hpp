@@ -20,12 +20,14 @@ public:
 
     // Deletion
     T pop() override {
-        return list.removeTail();
+        T datum = peek();
+        list.removeTail();
+        return datum;
     };
 
     // Access
     T peek() const override {
-        return list.getTail();
+        return list.getTail()->data;
     };
 
     //Getters
