@@ -152,8 +152,8 @@ public:
 
 	LinkedList(const LinkedList<T>& list) {
 		Node* iNode = list.head;
-		while (iNode->next) {
-			addTail(iNode->next->data);
+		while (iNode) {
+			addTail(iNode->data);
 			count++;
 			iNode = iNode->next;
 		}
