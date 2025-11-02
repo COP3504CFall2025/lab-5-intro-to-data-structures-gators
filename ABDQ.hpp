@@ -117,7 +117,7 @@ public:
     // deletion
     T popFront() override {
         if (size_ != 0) {
-            T formerFront = front_;
+            T formerFront = front();
             size_--;
             front_ = (front_ + 1) % capacity_;
             shrinkIfNeeded();
