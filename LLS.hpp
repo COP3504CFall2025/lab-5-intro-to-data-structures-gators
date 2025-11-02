@@ -29,6 +29,8 @@ public:
     T peek() const override {
         if (list.getCount()) {
             return list.getTail()->data;
+        } else {
+            throw std::runtime_error("List-based stack is empty.");
         }
     };
 

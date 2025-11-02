@@ -18,11 +18,7 @@ private:
 public:
     // Constructors + Big 5
     ABQ() : array_(new T[1]), capacity_(1), curr_size_(0) {};
-    explicit ABQ(const size_t capacity) {
-        this->array_ = new T[capacity];
-        this->capacity_ = capacity;
-        this->curr_size_ = capacity;
-    };
+    explicit ABQ(const size_t capacity) : array_(new T[capacity]), capacity_(capacity), curr_size_(0) {};
     ABQ(const ABQ& other) {
         this->array_ = new T[other.capacity_];
         this->curr_size_ = other.curr_size_;
@@ -37,12 +33,12 @@ public:
 
         delete[] this->array_;
 
-        this->array_ = new T[other.capacity_];
-        this->curr_size_ = other.curr_size_;
-        this->capacity_ = other.capacity_;
+        this->array_ = new T[rhs.capacity_];
+        this->curr_size_ = rhs.curr_size_;
+        this->capacity_ = rhs.capacity_;
 
-        for (size_t i = 0; i < other.capacity_; i++) {
-            this->array_[i] = other.array_[i];
+        for (size_t i = 0; i < rhs.capacity_; i++) {
+            this->array_[i] = rhs.array_[i];
         }
 
         return *this;
@@ -61,13 +57,9 @@ public:
 
         delete[] this->array_;
 
-        this->array_ = new T[rhs.capacity_];
+        this->array_ = rhs.array_;
         this->curr_size_ = rhs.curr_size_;
         this->capacity_ = rhs.capacity_;
-
-        for (size_t i = 0; i < rhs.capacity_; i++) {
-            this->array_[i] = rhs.array_[i];
-        }
 
         return *this;
     };
@@ -81,7 +73,7 @@ public:
     // Getters
     [[nodiscard]] size_t getSize() const noexcept override {return curr_size_;};
     [[nodiscard]] size_t getMaxCapacity() const noexcept {return capacity_;};
-    [[nodiscard]] T* getData() const noexcept {return *array_;};
+    [[nodiscard]] T* getData() const noexcept {return array_;};
 
     // Insertion
     void enqueue(const T& data) override {
@@ -106,7 +98,7 @@ public:
 
     // Access
     T peek() const override {
-        if (curr_size_ != 0) {
+        if (curr_size_ == 0) {
             throw std::runtime_error("Array-based queue is empty.");
         } else {
             return (capacity_-1)-curr_size_;

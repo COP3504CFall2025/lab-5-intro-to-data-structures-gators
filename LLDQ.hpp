@@ -41,11 +41,15 @@ public:
     const T& front() const override {
         if (list.getCount()) {
             return list.getHead()->data;
+        } else {
+            throw std::runtime_error("List-based deque is empty.");
         }
     };
     const T& back() const override {
         if (list.getCount()) {
             return list.getTail()->data;
+        } else {
+            throw std::runtime_error("List-based deque is empty.");
         }
     };
 
