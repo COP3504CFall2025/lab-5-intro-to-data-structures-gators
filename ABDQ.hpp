@@ -132,15 +132,15 @@ public:
     };
     T popBack() override {
         if (size_ != 0) {
-            T formerBack = back();
+            T formerBack;
             size_--;
             if (back_ == 0) {
-                back_ = capacity_;
+                back_ = capacity_-1;
             } else {
                 back_--;
             }
             shrinkIfNeeded();
-            return formerBack;
+            return data_[back];
         } else {
             throw std::runtime_error("Array-based deque is empty.");
         }
@@ -158,11 +158,7 @@ public:
         if (size_ == 0) {
             throw std::runtime_error("Array-based deque is empty.");
         } else {
-            if (back_ == 0) {
-                return data_[capacity_-1];
-            } else {
-                return data_[back_-1];
-            }
+            return data_[back_];
         }
     };
 
