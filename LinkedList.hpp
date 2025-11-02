@@ -117,7 +117,7 @@ public:
 
 	// Operators
 	LinkedList<T>& operator=(LinkedList<T>&& other) noexcept {
-		if (*this == other) {
+		if (this == &other) {
 			return *this;
 		}
 		clear();
@@ -126,9 +126,11 @@ public:
 		this->tail = other.tail;
 		this->count = other.count;
 		other.clear();
+
+		return *this;
 	};
 	LinkedList<T>& operator=(const LinkedList<T>& rhs) {
-		if (*this == rhs) {
+		if (this == &rhs) {
 			return *this;
 		}
 		clear();
@@ -143,6 +145,8 @@ public:
 			count++;
 			iNode = iNode->next;
 		}
+
+		return *this;
 	};
 
 	// Construction/Destruction
