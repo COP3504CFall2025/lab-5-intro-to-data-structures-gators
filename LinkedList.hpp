@@ -23,8 +23,7 @@ public:
 		}
 
 		Node* printNode = head;
-		cout << printNode->data;
-		while (printNode->next) {
+		while (printNode) {
 			cout << printNode->data << endl;
 			printNode = printNode->next;
 		}
@@ -35,8 +34,7 @@ public:
 		}
 
 		Node* printNode = tail;
-		cout << printNode->data;
-		while (printNode->prev) {
+		while (printNode) {
 			cout << printNode->data << endl;
 			printNode = printNode->prev;
 		}
@@ -78,40 +76,36 @@ public:
 
 	// Removal
 	bool removeHead() {
-		if (count > 1) {
+		if (count == 0) {
+			return false;
+		} else if (count == 1) {
+			delete head;
+			head = nullptr;
+			tail = nullptr;
+		} else {
 			Node* newHead = head->next;
 			delete head;
 			head = newHead;
 			head->prev = nullptr;
-			count--;
-			return true;
 		}
-		if (count == 1) {
-			delete head;
-			head = nullptr;
-			tail = nullptr;
-			count--;
-			return true;
-		}
-		return false;
+		count--;
+		return true;
 	};
 	bool removeTail() {
-		if (count > 1) {
+		if (count == 0) {
+			return false;
+		} else if (count == 1) {
+			delete tail;
+			head = nullptr;
+			tail = nullptr;
+		} else {
 			Node* newTail = tail->prev;
 			delete tail;
 			tail = newTail;
 			tail->next = nullptr;
-			count--;
-			return true;
 		}
-		if (count == 1) {
-			delete tail;
-			head = nullptr;
-			tail = nullptr;
-			count--;
-			return true;
-		}
-		return false;
+		count--;
+		return true;
 	};
 	void clear() {
 		while (removeHead()) {}
@@ -140,7 +134,6 @@ public:
 		Node* iNode = rhs.head;
 		while (iNode) {
 			addTail(iNode->data);
-			count++;
 			iNode = iNode->next;
 		}
 
@@ -154,7 +147,6 @@ public:
 		Node* iNode = list.head;
 		while (iNode) {
 			addTail(iNode->data);
-			count++;
 			iNode = iNode->next;
 		}
 	};

@@ -111,11 +111,7 @@ public:
         ensureCapacity();
         size_++;
         data_[back_] = item;
-        if (back_ == capacity_) {
-            back_ = 0;
-        } else {
-            back_++;
-        }
+        back_ = (back_ + 1) % capacity_;
     };
 
     // deletion
@@ -134,7 +130,11 @@ public:
         if (size_ != 0) {
             T formerBack = back();
             size_--;
-            back_ = (back_-1) % capacity_;
+            if (back_ == 0) {
+                back_ = capacity_-1;
+            } else {
+                back_--;
+            }
             shrinkIfNeeded();
             return formerBack;
         } else {
