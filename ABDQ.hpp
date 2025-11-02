@@ -132,7 +132,7 @@ public:
     };
     T popBack() override {
         if (size_ != 0) {
-            t formerBack = back();
+            T formerBack = back();
             size_--;
             back_ = (back_-1) % capacity_;
             shrinkIfNeeded();
