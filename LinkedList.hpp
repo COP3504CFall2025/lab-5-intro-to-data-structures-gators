@@ -121,7 +121,6 @@ public:
 		this->head = other.head;
 		this->tail = other.tail;
 		this->count = other.count;
-		other.clear();
 
 		return *this;
 	};
