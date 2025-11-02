@@ -27,7 +27,9 @@ public:
 
     // Access
     T peek() const override {
-        return list.getTail()->data;
+        if (list.getCount()) {
+            return list.getTail()->data;
+        }
     };
 
     //Getters
