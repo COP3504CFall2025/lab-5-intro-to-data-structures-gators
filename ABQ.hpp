@@ -17,7 +17,7 @@ private:
 
 public:
     // Constructors + Big 5
-    ABQ() : array_(new T[1]), capacity_(1), size_(0) {};
+    ABQ() : array_(new T[1]), capacity_(1), curr_size_(0) {};
     explicit ABQ(const size_t capacity) {
         this->array_ = new T[capacity];
         this->capacity_ = capacity;
@@ -61,12 +61,12 @@ public:
 
         delete[] this->array_;
 
-        this->array_ = new T[other.capacity_];
-        this->curr_size_ = other.curr_size_;
-        this->capacity_ = other.capacity_;
+        this->array_ = new T[rhs.capacity_];
+        this->curr_size_ = rhs.curr_size_;
+        this->capacity_ = rhs.capacity_;
 
-        for (size_t i = 0; i < other.capacity_; i++) {
-            this->array_[i] = other.array_[i];
+        for (size_t i = 0; i < rhs.capacity_; i++) {
+            this->array_[i] = rhs.array_[i];
         }
 
         return *this;
