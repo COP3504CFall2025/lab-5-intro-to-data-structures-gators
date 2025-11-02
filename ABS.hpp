@@ -108,7 +108,11 @@ public:
     };
 
     T peek() const override {
-        return array_[curr_size_-1];
+        if (curr_size_ != 0) {
+            throw std::runtime_error("Array-based stack is empty.");
+        } else {
+            return array_[curr_size_-1];
+        }
     };
 
     T pop() override {

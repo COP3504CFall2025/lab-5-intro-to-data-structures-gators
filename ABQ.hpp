@@ -105,7 +105,11 @@ public:
 
     // Access
     T peek() const override {
-        return (capacity_-1)-curr_size_;
+        if (curr_size_ != 0) {
+            throw std::runtime_error("Array-based queue is empty.");
+        } else {
+            return (capacity_-1)-curr_size_;
+        }
     };
 
     // Deletion

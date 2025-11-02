@@ -152,13 +152,21 @@ public:
 
     // access
     const T& front() const override {
-        return data_[front_];
+        if (size_ == 0) {
+            throw std::runtime_error("Array-based deque is empty.");
+        } else {
+            return data_[front_];
+        }
     };
     const T& back() const override {
-        if (back_ == 0) {
-            return data_[capacity_-1];
+        if (size_ == 0) {
+            throw std::runtime_error("Array-based deque is empty.");
         } else {
-            return data_[back_-1];
+            if (back_ == 0) {
+                return data_[capacity_-1];
+            } else {
+                return data_[back_-1];
+            }
         }
     };
 
