@@ -99,8 +99,6 @@ public:
     void enqueue(const T& data) override {
         if (capacity_ == curr_size_) {
 
-            std::size_t oldCapacity = capacity_;
-
             // makes the array capacity one if empty
             if (capacity_ == 0) {
                 capacity_ = 1;
@@ -111,7 +109,7 @@ public:
             // doubles capacity_ by adding space between the tail and head
             T* newData = new T[capacity_];
             for (std::size_t i = 0; i < curr_size_; i++) {
-                newData[i] = std::move(array_[(front_ + i) % oldCapacity]);
+                newData[i] = std::move(array_[i]);
             }
 
             front_ = 0;
@@ -120,9 +118,8 @@ public:
             delete[] array_;
             array_ = std::move(newData);
         }
+        array_[curr_size_] = data;
         curr_size_++;
-        array_[back_] = data;
-        back_ = (back_ + 1) % capacity_;
     };
 
     // Access
@@ -136,33 +133,21 @@ public:
 
     // Deletion
     T dequeue() override {
+        T formerFront = array_[0];
+        curr_size_--;
         if (curr_size_ != 0) {
-            T formerFront = array_[front_];
-            curr_size_--;
-            front_ = (front_ + 1) % capacity_;
-
-            if (curr_size_ < capacity_ / scale_factor_) {
-
-                size_t oldCapacity = capacity_;
-                capacity_ /= 2;
-
-                // halves capacity_ by removing space between the tail and head
-                T* newData = new T[capacity_];
-                for (size_t i = 0; i < curr_size_; i++) {
-                    newData[i] = std::move(array_[(front_ + i) % oldCapacity]);
-                }
-
-                front_ = 0;
-                back_ = curr_size_;
-
-                delete[] array_;
-                array_ = std::move(newData);
+            // shifts the array
+            T* newData = new T[capacity_-1];
+            for (size_t i = 0; i < curr_size_; i++) {
+                newData[i] = std::move(array_[i+1]);
             }
 
+            delete[] array_;
+            array_ = std::move(newData);
             return formerFront;
         } else {
             throw std::runtime_error("Array-based queue is empty.");
-        }
+        } 
     };
 
 };

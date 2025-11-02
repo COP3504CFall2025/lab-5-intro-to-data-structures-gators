@@ -176,7 +176,7 @@ public:
                 capacity_ *= SCALE_FACTOR;
             }
 
-            // doubles capacity_ by adding space between the tail and head
+            // multiplies capacity_ by adding space between the tail and head
             T* newData = new T[capacity_];
             for (std::size_t i = 0; i < size_; i++) {
                 newData[i] = std::move(data_[(front_ + i) % oldCapacity]);
@@ -197,7 +197,7 @@ public:
             size_t oldCapacity = capacity_;
             capacity_ /= 2;
 
-            // halves capacity_ by removing space between the tail and head
+            // shrinks capacity_ by removing space between the tail and head
             T* newData = new T[capacity_];
             for (size_t i = 0; i < size_; i++) {
                 newData[i] = std::move(data_[(front_ + i) % oldCapacity]);
