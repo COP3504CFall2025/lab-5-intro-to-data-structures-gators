@@ -17,8 +17,8 @@ private:
 
 public:
     // Big 5 + Parameterized Constructor
-    ABS() : array_(new T[1]), capacity_(1), curr_size_(0) {};
-    explicit ABS(const size_t capacity) : array_(new T[capacity]), capacity_(capacity), curr_size_(0) {};
+    ABS() : capacity_(1), curr_size_(0), array_(new T[1]) {};
+    explicit ABS(const size_t capacity) : capacity_(capacity), curr_size_(0), array_(new T[capacity]) {};
     ABS(const ABS& other) {
         this->array_ = new T[other.capacity_];
         this->curr_size_ = other.curr_size_;

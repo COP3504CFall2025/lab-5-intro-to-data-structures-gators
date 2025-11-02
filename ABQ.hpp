@@ -17,8 +17,8 @@ private:
 
 public:
     // Constructors + Big 5
-    ABQ() : array_(new T[1]), capacity_(1), curr_size_(0) {};
-    explicit ABQ(const size_t capacity) : array_(new T[capacity]), capacity_(capacity), curr_size_(0) {};
+    ABQ() : capacity_(1), curr_size_(0), array_(new T[1]) {};
+    explicit ABQ(const size_t capacity) : capacity_(capacity), curr_size_(0), array_(new T[capacity]) {};
     ABQ(const ABQ& other) {
         this->array_ = new T[other.capacity_];
         this->curr_size_ = other.curr_size_;
@@ -101,7 +101,7 @@ public:
         if (curr_size_ == 0) {
             throw std::runtime_error("Array-based queue is empty.");
         } else {
-            return (capacity_-1)-curr_size_;
+            return array_[capacity_-curr_size_];
         }
     };
 

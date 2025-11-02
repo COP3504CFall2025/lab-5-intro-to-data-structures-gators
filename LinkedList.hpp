@@ -146,7 +146,7 @@ public:
 	// Construction/Destruction
 	LinkedList() : head(nullptr), tail(nullptr), count(0) {};
 
-	LinkedList(const LinkedList<T>& list) {
+	LinkedList(const LinkedList<T>& list) : head(nullptr), tail(nullptr), count(0) {
 		Node* iNode = list.head;
 		while (iNode) {
 			addTail(iNode->data);
