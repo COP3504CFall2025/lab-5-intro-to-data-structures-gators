@@ -137,13 +137,9 @@ public:
 		}
 		clear();
 
-		Node* iNode = head;
-		if (rhs.head) {
-			addHead(rhs.head->data);
-			count++;
-		}
-		while (iNode->next) {
-			addTail(iNode->next->data);
+		Node* iNode = rhs.head;
+		while (iNode) {
+			addTail(iNode->data);
 			count++;
 			iNode = iNode->next;
 		}
@@ -155,11 +151,7 @@ public:
 	LinkedList() : head(nullptr), tail(nullptr), count(0) {};
 
 	LinkedList(const LinkedList<T>& list) {
-		Node* iNode = head;
-		if (iNode) {
-			addHead(list.head->data);
-			count++;
-		}
+		Node* iNode = list.head;
 		while (iNode->next) {
 			addTail(iNode->next->data);
 			count++;
