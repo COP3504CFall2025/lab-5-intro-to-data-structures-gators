@@ -19,13 +19,10 @@ private:
 public:
     // Big 5
     ABDQ() : capacity_(4), size_(0), front_(0), back_(0) {
-        data_ = new T[size_];
+        data_ = new T[capacity_];
     }
     explicit ABDQ(std::size_t capacity) : capacity_(capacity), size_(0), front_(0), back_(0) {
-        data_ = new T[size_];
-        for (std::size_t i = 0; i < size_; i++) {
-            data_[i] = 0;
-        }
+        data_ = new T[capacity_];
     }
     ABDQ(const ABDQ& other) {
         size_ = other.size_;
@@ -52,7 +49,7 @@ public:
         capacity_ = other.capacity_;
         data_ = data;
 
-        for (std::size_t i = 0; i < other.capacity_; i++) {
+        for (std::size_t i = 0; i < other.size_; i++) {
             this->data_[i] = other.data_[i];
         }
         return *this;
@@ -71,7 +68,7 @@ public:
 
         return *this;
     }
-    ~ABDQ() {
+    ~ABDQ() noexcept {
         delete[] data_;
         size_ = 0;
         capacity_ = 0;
@@ -82,17 +79,17 @@ public:
     void pushFront(const T& item) override {
         if (capacity_ == 0) { capacity_ = 1; data_ = new T[capacity_]; }
         if (size_ >= capacity_) {
-            T* data_2 = new T[capacity_ * 2];
+            this->ensureCapacity();
+            T* data_2 = new T[capacity_];
             for (std::size_t i = 0; i < size_; i++) {
                 data_2[i + 1] = data_[i];
             }
             data_2[0] = item;
             size_++;
-            capacity_ = capacity_ * 2;
             delete[] data_;
             data_ = std::move(data_2);
         } else {
-            T* data_2 = new T[capacity_ * 2];
+            T* data_2 = new T[capacity_];
             for (std::size_t i = 0; i < size_; i++) {
                 data_2[i + 1] = data_[i];
             }
@@ -105,13 +102,13 @@ public:
     void pushBack(const T& item) override {
         if (capacity_ == 0) { capacity_ = 1; data_ = new T[capacity_]; }
         if (size_ >= capacity_) {
-            T* data_2 = new T[capacity_ * 2];
+            this->ensureCapacity();
+            T* data_2 = new T[capacity_];
             for (std::size_t i = 0; i < size_; i++) {
                 data_2[i] = data_[i];
             }
             data_2[size_] = item;
             size_++;
-            capacity_ = capacity_ * 2;
             delete[] data_;
             data_ = data_2;
         } else {
@@ -132,6 +129,7 @@ public:
         }
         data_ = std::move(data_2);
         size_--;
+        this->shrinkIfNeeded();
         return popped;
     }
     T popBack() override {
@@ -141,11 +139,12 @@ public:
         T popped = data_[0];
         data_[size_ - 1] = 0;
         size_--;
+        this->shrinkIfNeeded();
         return popped;
     }
 
     void ensureCapacity() {
-        capacity_ *= 2;
+        capacity_ *= SCALE_FACTOR;
     }
 
     void shrinkIfNeeded() {
