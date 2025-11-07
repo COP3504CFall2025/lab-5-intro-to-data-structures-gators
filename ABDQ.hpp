@@ -158,16 +158,16 @@ public:
         }
     }
 
-    T PrintForward() {
-        T front = this->popFront();
-        this->pushBack(front);
-        return front;
+    void PrintForward() {
+        for (int i = 0; i < size_; i++) {
+            std::cout << data_[i] << std::endl;
+        }
     }
 
-    T PrintReverse() {
-        T back = this->popBack();
-        this->pushFront(back);
-        return back;
+    void PrintReverse() {
+        for (int i = size_ - 1; i >= 0; i--) {
+            std::cout << data_[i] << std::endl;
+        }
     }
 
     // Access

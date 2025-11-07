@@ -106,6 +106,18 @@ public:
         return popped;
     }
 
+    void PrintForward() {
+        for (int i = 0; i < size_; i++) {
+            std::cout << data_[i] << std::endl;
+        }
+    }
+
+    void PrintReverse() {
+        for (int i = size_ - 1; i >= 0; i--) {
+            std::cout << data_[i] << std::endl;
+        }
+    }
+
 private:
     size_t capacity_;
     size_t curr_size_;
