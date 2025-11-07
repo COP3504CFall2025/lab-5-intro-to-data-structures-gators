@@ -25,7 +25,18 @@ public:
             this->data_[i] = other.data_[i];
         }
     }
-    ABS& operator=(const ABS& rhs);
+    ABS& operator=(const ABS& rhs) {
+        if (this == &other) return *this;
+        delete[] array_;
+
+        curr_size_ = other.curr_size_;
+        capacity_ = other.capacity_;
+        array_ = new T[other.capacity_];
+        for (std::size_t i = 0; i < other.curr_size_; i++) {
+            this->data_[i] = other.data_[i];
+        }
+        return *this;
+    }
     ABS(ABS&& other) noexcept {
         array_ = other.array_;
         curr_size_ = other.curr_size_;
