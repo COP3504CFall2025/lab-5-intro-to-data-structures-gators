@@ -11,17 +11,32 @@ private:
     LinkedList<T> list;
 public:
     // Constructor
-    LLS();
+    LLS() = default;
 
     // Insertion
-    void push(const T& item) override;
+    void push(const T& item) override {
+        list.addHead(item);
+    }
 
     // Deletion
-    T pop() override;
+    T pop() override {
+        return list.removeHead();
+    }
 
     // Access
-    T peek() const override;
+    T peek() const override {
+        return list.getHead();
+    }
 
     //Getters
-    std::size_t getSize() const noexcept override;
+    std::size_t getSize() const noexcept override {
+        return list.getCount();
+    }
+
+    void printForward() const {
+		list.printForward();
+	}
+	void printReverse() const {
+		list.printReverse();
+	}
 };
