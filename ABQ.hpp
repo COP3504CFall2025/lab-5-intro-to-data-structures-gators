@@ -23,7 +23,7 @@ public:
     ABQ& operator=(const ABQ& rhs);
     ABQ(ABQ&& other) noexcept;
     ABQ& operator=(ABQ&& rhs) noexcept;
-    ~ABQ() noexcept override;
+    ~ABQ() noexcept;
 
     // Getters
     [[nodiscard]] size_t getSize() const noexcept override;
