@@ -33,10 +33,10 @@ public:
         return list.getCount();
     }
 
-    void printForward() const {
+    void PrintForward() const {
 		list.printForward();
 	}
-	void printReverse() const {
+	void PrintReverse() const {
 		list.printReverse();
 	}
 };

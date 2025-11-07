@@ -3,6 +3,7 @@
 #include <cstddef>
 #include <stdexcept>
 #include "Interfaces.hpp"
+#include <iostream>
 
 // Technically bad, but size_t isn't likely to conflict with any client code.
 using std::size_t;
@@ -123,5 +124,17 @@ public:
         array_ = std::move(data_2);
         curr_size_--;
         return popped;
+    }
+
+    void PrintForward() {
+        for (int i = 0; i < curr_size_; i++) {
+            std::cout << array_[i] << std::endl;
+        }
+    }
+
+    void PrintReverse() {
+        for (int i = curr_size_ - 1; i >= 0; i--) {
+            std::cout << array_[i] << std::endl;
+        }
     }
 };
