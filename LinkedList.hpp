@@ -114,6 +114,9 @@ public:
 			val = this->removeHead();
 		}
 	}
+	void clear() {
+		this->Clear();
+	}
 
 	// Operators
 	LinkedList<T>& operator=(LinkedList<T>&& other) noexcept {
