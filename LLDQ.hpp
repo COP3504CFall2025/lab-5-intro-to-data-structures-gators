@@ -40,13 +40,13 @@ public:
     // Element Accessors
     const T& front() const override {
         if (list.getHead() == nullptr) {
-            throw std::runtime_error("Empty Data Structure!")
+            throw std::runtime_error("Empty Data Structure!");
         }
         return list.getHead()->data;
     }
     const T& back() const override {
         if (list.getHead() == nullptr) {
-            throw std::runtime_error("Empty Data Structure!")
+            throw std::runtime_error("Empty Data Structure!");
         }
         return list.getTail()->data;
     }
