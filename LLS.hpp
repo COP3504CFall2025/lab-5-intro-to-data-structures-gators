@@ -20,8 +20,8 @@ public:
 
     // Deletion
     T pop() override {
-        const Node<T>* var = list.getHead();
-        if (var == nullptr) {
+        const Node<T>* varple = list.getHead();
+        if (varple == nullptr) {
             throw std::runtime_error("Empty Data Structure!");
         }
         T var = list.getHead()->data;
