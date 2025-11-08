@@ -48,9 +48,9 @@ public:
         delete[] data_;
         data_ = data_2;
         size_ = other.size_;
+        capacity_ = other.capacity_;
         front_ = 0;
         back_ = size_ % capacity_;
-        capacity_ = other.capacity_;
 
         return *this;
     }
@@ -81,20 +81,20 @@ public:
 
     // Insertion
     void pushFront(const T& item) override {
-        if (size_ == capacity_ - 1) {
+        if (size_ == capacity_) {
             ensureCapacity();
         }
-        front_ = (front_ - 1 + capacity_) % capacity_;
+        front_ = (front_ + capacity_ - 1) % capacity_;
         data_[front_] = item;
-        size_ = size_ + 1;
+        size_++;
     }
     void pushBack(const T& item) override {
-        if (size_ == capacity_ - 1) {
+        if (size_ == capacity_) {
             ensureCapacity();
         }
         data_[back_] = item;
         back_ = (back_ + 1) % capacity_;
-        size_ = size_ + 1;
+        size_++;
         // Thanks Intro to Data Structures pptx
     }
 
@@ -121,7 +121,11 @@ public:
     }
 
     void ensureCapacity() {
-        std::size_t new_capacity_ = capacity_ * SCALE_FACTOR;
+        if (capacity_ != 0) {
+            std::size_t new_capacity_ = capacity_ * SCALE_FACTOR;
+        } else {
+            std::size_t new_capacity_ = SCALE_FACTOR;
+        }
         T* data_2 = new T[new_capacity_];
         for (std::size_t i = 0; i < size_; ++i) {
             data_2[i] = data_[(front_ + i) % capacity_];
@@ -144,7 +148,7 @@ public:
             data_ = data_2;
             capacity_ = new_capacity_;
             front_ = 0;
-            back_  = size_ - 1;
+            back_  = size_ % capacity_;
         }
     }
 
