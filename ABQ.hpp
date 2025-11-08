@@ -121,14 +121,15 @@ public:
             throw std::runtime_error("Empty Data Structure!");
         }
         T popped = array_[0];
-        // if (curr_size_ <= capacity_) {
-        //     capacity_ /= scale_factor_;
-        // }
+        if (curr_size_ <= capacity_) {
+            capacity_ /= scale_factor_;
+        }
         T* data_2 = new T[capacity_];
         for (std::size_t i = 1; i < curr_size_; i++) {
             data_2[i - 1] = array_[i];
         }
-        array_ = std::move(data_2);
+        delete[] array_;
+        array_ = data_2;
         curr_size_--;
         return popped;
     }
