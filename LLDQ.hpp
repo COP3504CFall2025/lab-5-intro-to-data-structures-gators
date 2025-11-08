@@ -27,14 +27,12 @@ public:
 
     // Core Removal Operations
     T popFront() override {
-        T head = list.getHead()->data;
         list.removeHead();
-        return head;
+        return list.getHead()->data;
     }
     T popBack() override {
-        T tail = list.getTail()->data;
         list.removeTail();
-        return tail;
+        return list.getTail()->data;
     }
 
     // Element Accessors
