@@ -91,7 +91,7 @@ public:
     // Insertion
     void enqueue(const T& data) override {
         if (capacity_ == 0) { capacity_ = 1; array_ = new T[capacity_]; }
-        if (curr_size_ >= capacity_/scale_factor_) {
+        if (curr_size_ <= capacity_/scale_factor_) {
             this->ensureCapacity();
             T* data_2 = new T[capacity_];
             for (std::size_t i = 0; i < curr_size_; i++) {
