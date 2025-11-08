@@ -139,18 +139,19 @@ public:
     }
 
     void shrinkIfNeeded() {
-        if (size_ * SCALE_FACTOR <= capacity_) {
-            std::size_t new_capacity_ = capacity_/SCALE_FACTOR;
-            T* data_2 = new T[new_capacity_];
-            for (std::size_t i = 0; i < size_; ++i) {
-                data_2[i] = data_[(front_ + i) % capacity_];
-            }
-            delete[] data_;
-            data_ = data_2;
-            capacity_ = new_capacity_;
-            front_ = 0;
-            back_  = size_ % capacity_;
+        if (capacity_ <= 1) return;
+        if (size_ * SCALE_FACTOR > capacity_) return;
+        std::size_t new_capacity_ = capacity_ / SCALE_FACTOR;
+        if (new_capacity_ < 1) new_capacity_ = 1;
+        T* data_2 = new T[new_capacity_];
+        for (std::size_t i = 0; i < size_; ++i) {
+            data_2[i] = data_[(front_ + i) % capacity_];
         }
+        delete[] data_;
+        data_ = data_2;
+        capacity_ = new_capacity_;
+        front_ = 0;
+        back_  = size_ % capacity_;
     }
 
     void PrintForward() {
