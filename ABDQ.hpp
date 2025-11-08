@@ -42,10 +42,11 @@ public:
         if (this == &other) return *this;
         delete[] data_;
 
-        T* data_ = new T[other.capacity_];
+        T* data_2 = new T[other.capacity_];
         for (std::size_t i = 0; i < other.size_; ++i) {
             data_[i] = other.data_[(other.front_ + i) % other.capacity_];
         }
+        data_ = data_2;
         size_ = other.size_;
         front_ = 0;
         back_ = size_;
@@ -129,7 +130,7 @@ public:
         data_ = data_2;
         capacity_ = new_capacity_;
         front_ = 0;
-        back_  = size_;
+        back_  = size_ % capacity;
     }
 
     void shrinkIfNeeded() {
