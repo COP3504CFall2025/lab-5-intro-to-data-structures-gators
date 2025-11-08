@@ -20,7 +20,9 @@ public:
 
     // Deletion
     T pop() override {
-        return list.removeHead();
+        T head = list.getHead()->data;
+        list.removeHead();
+        return head;
     }
 
     // Access

@@ -27,14 +27,14 @@ public:
         }
     }
     ABS& operator=(const ABS& rhs) {
-        if (this == &other) return *this;
+        if (this == &rhs) return *this;
         delete[] array_;
 
-        curr_size_ = other.curr_size_;
-        capacity_ = other.capacity_;
-        array_ = new T[other.capacity_];
-        for (std::size_t i = 0; i < other.curr_size_; i++) {
-            this->data_[i] = other.data_[i];
+        curr_size_ = rhs.curr_size_;
+        capacity_ = rhs.capacity_;
+        array_ = new T[rhs.capacity_];
+        for (std::size_t i = 0; i < rhs.curr_size_; i++) {
+            this->data_[i] = rhs.data_[i];
         }
         return *this;
     }
@@ -47,16 +47,16 @@ public:
         other.capacity_ = 0;
     }
     ABS& operator=(ABS&& rhs) noexcept {
-        if (this == &other) return *this;
+        if (this == &rhs) return *this;
         delete[] array_;
 
-        array_ = other.array_;
-        curr_size_ = other.curr_size_;
-        capacity_ = other.capacity_;
+        array_ = rhs.array_;
+        curr_size_ = rhs.curr_size_;
+        capacity_ = rhs.capacity_;
 
-        other.array_ = nullptr;
-        other.curr_size_ = 0;
-        other.capacity_ = 0;
+        rhs.array_ = nullptr;
+        rhs.curr_size_ = 0;
+        rhs.capacity_ = 0;
 
         return *this;
     }

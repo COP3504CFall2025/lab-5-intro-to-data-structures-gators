@@ -22,23 +22,27 @@ public:
         list.addHead(item);
     }
     void pushBack(const T& item) override {
-        ist.addTail(item);
+        list.addTail(item);
     }
 
     // Core Removal Operations
     T popFront() override {
-        return list.removeHead();
+        T head = list.getHead()->data;
+        list.removeHead();
+        return head;
     }
     T popBack() override {
-        return list.removeTail();
+        T tail = list.getTail()->data;
+        list.removeTail();
+        return tail;
     }
 
     // Element Accessors
     const T& front() const override {
-        return list.getHead();
+        return list.getHead()->data;
     }
     const T& back() const override {
-        return list.getTail();
+        return list.getTail()->data;
     }
 
     // Getter
