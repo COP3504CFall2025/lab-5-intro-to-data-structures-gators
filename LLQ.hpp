@@ -20,14 +20,16 @@ public:
 
     // Deletion
     T dequeue() override {
+        T var = list.getHead()->data;
         list.removeHead();
-        return list.getHead()->data;
+        return var;
     }
 
     // Access
     T peek() const override {
         if (list.getHead() == nullptr) {
-            return 0;
+            int placeholder = 0;
+            return placeholder;
         }
         return list.getHead()->data;
     }

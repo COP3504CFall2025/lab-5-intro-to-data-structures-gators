@@ -27,26 +27,30 @@ public:
 
     // Core Removal Operations
     T popFront() override {
+        T var = list.getHead()->data;
         list.removeHead();
-        return list.getHead()->data;
+        return var;
     }
     T popBack() override {
+        T var = list.getTail()->data;
         list.removeTail();
-        return list.getTail()->data;
+        return var;
     }
 
     // Element Accessors
     const T& front() const override {
         if (list.getHead() == nullptr) {
-            return 0;
+            int placeholder = 0;
+            return placeholder;
         }
         return list.getHead()->data;
     }
     const T& back() const override {
         if (list.getHead() == nullptr) {
-            return 0;
+            int placeholder = 0;
+            return placeholder;
         }
-        return list.getHead()->data;
+        return list.getTail()->data;
     }
 
     // Getter
