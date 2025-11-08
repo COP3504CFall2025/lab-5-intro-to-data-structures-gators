@@ -123,18 +123,18 @@ public:
         if (size_ == 0) {
             throw std::runtime_error("Empty Data Structure!");
         }
-        T popped = data_[size_ - 1];
+        T popped = data_[0];
         if (size_ <= capacity_/SCALE_FACTOR) {
             capacity_ /= SCALE_FACTOR;
-            T* data_2 = new T[capacity_];
-            for (std::size_t i = 0; i < size_; i++) {
-                data_2[i] = data_[i];
-            }
-            delete[] data_;
-            data_ = data_2;
         }
-        data_[size_ - 1] = 0;
+        T* data_2 = new T[capacity_];
+        for (std::size_t i = 1; i < size_; i++) {
+            data_2[i - 1] = data_[i];
+        }
+        delete[] data_;
+        data_ = data_2;
         size_--;
+        front_ = data_[0];
         return popped;
     }
     T popBack() override {
@@ -153,6 +153,7 @@ public:
         }
         data_[size_ - 1] = 0;
         size_--;
+        back_ = data_[size_ - 1];
         return popped;
     }
 
@@ -188,13 +189,13 @@ public:
         if (size_ == 0) {
             throw std::runtime_error("Empty Data Structure!");
         }
-        return data_[0];
+        return front_;
     }
     const T& back() const override {
         if (size_ == 0) {
             throw std::runtime_error("Empty Data Structure!");
         }
-        return data_[size_ - 1];
+        return back_;
     }
 
     // Getters
