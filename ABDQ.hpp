@@ -121,26 +121,38 @@ public:
     // Deletion
     T popFront() override {
         if (size_ == 0) {
-            throw std::out_of_range("Index out of range");
+            throw std::runtime_error("Empty Data Structure!");
         }
-        T popped = data_[0];
-        T* data_2 = new T[capacity_];
-        for (std::size_t i = 1; i < size_; i++) {
-            data_2[i - 1] = data_[i];
+        T popped = data_[size_ - 1];
+        if (size_ <= capacity_/SCALE_FACTOR) {
+            capacity_ /= SCALE_FACTOR;
+            T* data_2 = new T[capacity_];
+            for (std::size_t i = 0; i < size_; i++) {
+                data_2[i] = data_[i];
+            }
+            delete[] data_;
+            data_ = data_2;
         }
-        data_ = std::move(data_2);
+        data_[size_ - 1] = 0;
         size_--;
-        this->shrinkIfNeeded();
         return popped;
     }
     T popBack() override {
         if (size_ == 0) {
-            throw std::out_of_range("Index out of range");
+            throw std::runtime_error("Empty Data Structure!");
         }
-        T popped = data_[0];
+        T popped = data_[size_ - 1];
+        if (size_ <= capacity_/SCALE_FACTOR) {
+            capacity_ /= SCALE_FACTOR;
+            T* data_2 = new T[capacity_];
+            for (std::size_t i = 0; i < size_; i++) {
+                data_2[i] = data_[i];
+            }
+            delete[] data_;
+            data_ = data_2;
+        }
         data_[size_ - 1] = 0;
         size_--;
-        this->shrinkIfNeeded();
         return popped;
     }
 
