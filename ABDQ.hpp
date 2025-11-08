@@ -121,10 +121,11 @@ public:
     }
 
     void ensureCapacity() {
+        std::size_t new_capacity_;
         if (capacity_ != 0) {
-            std::size_t new_capacity_ = capacity_ * SCALE_FACTOR;
+            new_capacity_ = capacity_ * SCALE_FACTOR;
         } else {
-            std::size_t new_capacity_ = SCALE_FACTOR;
+            new_capacity_ = SCALE_FACTOR;
         }
         T* data_2 = new T[new_capacity_];
         for (std::size_t i = 0; i < size_; ++i) {

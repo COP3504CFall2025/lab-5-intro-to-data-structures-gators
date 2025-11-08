@@ -27,11 +27,19 @@ public:
 
     // Core Removal Operations
     T popFront() override {
+        const Node<T>* varpy = list.getHead();
+        if (varpy == nullptr) {
+            throw std::runtime_error("Empty Data Structure!");
+        }
         T var = list.getHead()->data;
         list.removeHead();
         return var;
     }
     T popBack() override {
+        const Node<T>* varpy = list.getTail();
+        if (varpy == nullptr) {
+            throw std::runtime_error("Empty Data Structure!");
+        }
         T var = list.getTail()->data;
         list.removeTail();
         return var;
