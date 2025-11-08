@@ -78,44 +78,21 @@ public:
 
     // Insertion
     void pushFront(const T& item) override {
-        if (capacity_ == 0) { capacity_ = 1; data_ = new T[capacity_]; }
-        if (size_ >= capacity_) {
-            this->ensureCapacity();
-            T* data_2 = new T[capacity_];
-            for (std::size_t i = 0; i < size_; i++) {
-                data_2[i + 1] = data_[i];
-            }
-            data_2[0] = item;
-            size_++;
-            delete[] data_;
-            data_ = std::move(data_2);
-        } else {
-            T* data_2 = new T[capacity_];
-            for (std::size_t i = 0; i < size_; i++) {
-                data_2[i + 1] = data_[i];
-            }
-            data_2[0] = item;
-            size_++;
-            delete[] data_;
-            data_ = std::move(data_2);
+        if (size_ == capacity_ - 1) {
+            throw std::runtime_error("Full Data Structure!");
         }
+        front_ = (front_ - 1 + capacity_) % capacity_;
+        data_[front_] = item;
+        size_ = size_ + 1;
     }
     void pushBack(const T& item) override {
-        if (capacity_ == 0) { capacity_ = 1; data_ = new T[capacity_]; }
-        if (size_ >= capacity_) {
-            this->ensureCapacity();
-            T* data_2 = new T[capacity_];
-            for (std::size_t i = 0; i < size_; i++) {
-                data_2[i] = data_[i];
-            }
-            data_2[size_] = item;
-            size_++;
-            delete[] data_;
-            data_ = data_2;
-        } else {
-            data_[size_] = item;
-            size_++;
+        if (size_ == capacity_ - 1) {
+            throw std::runtime_error("Full Data Structure!");
         }
+        data_[back_] = item;
+        back_ = (back_ + 1) % capacity_;
+        size_ = size_ + 1;
+        // Thanks Intro to Data Structures pptx
     }
 
     // Deletion
@@ -123,38 +100,19 @@ public:
         if (size_ == 0) {
             throw std::runtime_error("Empty Data Structure!");
         }
-        T popped = data_[0];
-        if (size_ <= capacity_/SCALE_FACTOR) {
-            capacity_ /= SCALE_FACTOR;
-        }
-        T* data_2 = new T[capacity_];
-        for (std::size_t i = 1; i < size_; i++) {
-            data_2[i - 1] = data_[i];
-        }
-        delete[] data_;
-        data_ = data_2;
-        size_--;
-        front_ = data_[0];
-        return popped;
+        T value = data_[front_];
+        front_ = (front_ + 1) % capacity_;
+        size_ = size_ - 1;
+        return value;
     }
     T popBack() override {
         if (size_ == 0) {
             throw std::runtime_error("Empty Data Structure!");
         }
-        T popped = data_[size_ - 1];
-        if (size_ <= capacity_/SCALE_FACTOR) {
-            capacity_ /= SCALE_FACTOR;
-            T* data_2 = new T[capacity_];
-            for (std::size_t i = 0; i < size_; i++) {
-                data_2[i] = data_[i];
-            }
-            delete[] data_;
-            data_ = data_2;
-        }
-        data_[size_ - 1] = 0;
-        size_--;
-        back_ = data_[size_ - 1];
-        return popped;
+        back_ = (back_ - 1 + capacity_) % capacity_;
+        T value = data_[back_];
+        size_ = size_ - 1;
+        return value;
     }
 
     void ensureCapacity() {
@@ -162,8 +120,8 @@ public:
     }
 
     void shrinkIfNeeded() {
-        if (size_ <= capacity_/2) {
-            capacity_ /= 2;
+        if (size_ <= capacity_/SCALE_FACTOR) {
+            capacity_ /= SCALE_FACTOR;
             T* data_2 = new T[capacity_];
             for (std::size_t i = 0; i < size_; i++) {
                 data_2[i] = data_[i];
@@ -173,12 +131,18 @@ public:
     }
 
     void PrintForward() {
+        if (size_ == 0) {
+            throw std::runtime_error("Empty Data Structure!");
+        }
         for (int i = 0; i < size_; i++) {
             std::cout << data_[i] << std::endl;
         }
     }
 
     void PrintReverse() {
+        if (size_ == 0) {
+            throw std::runtime_error("Empty Data Structure!");
+        }
         for (int i = size_ - 1; i >= 0; i--) {
             std::cout << data_[i] << std::endl;
         }
