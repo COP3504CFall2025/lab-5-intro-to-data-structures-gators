@@ -39,14 +39,14 @@ public:
 
     // Element Accessors
     const T& front() const override {
-        Node<T>* var = list.getHead();
+        const Node<T>* var = list.getHead();
         if (var == nullptr) {
             throw std::runtime_error("Empty Data Structure!");
         }
         return var->data;
     }
     const T& back() const override {
-        Node<T>* var = list.getTail();
+        const Node<T>* var = list.getTail();
         if (var == nullptr) {
             throw std::runtime_error("Empty Data Structure!");
         }

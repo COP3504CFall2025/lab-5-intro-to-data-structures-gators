@@ -27,7 +27,7 @@ public:
 
     // Access
     T peek() const override {
-        Node<T>* var = list.getHead();
+        const Node<T>* var = list.getHead();
         if (var == nullptr) {
             throw std::runtime_error("Empty Data Structure!");
         }

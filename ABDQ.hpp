@@ -43,13 +43,13 @@ public:
 
         T* data_2 = new T[other.capacity_];
         for (std::size_t i = 0; i < other.size_; ++i) {
-            data_[i] = other.data_[(other.front_ + i) % other.capacity_];
+            data_2[i] = other.data_[(other.front_ + i) % other.capacity_];
         }
         delete[] data_;
         data_ = data_2;
         size_ = other.size_;
         front_ = 0;
-        back_ = size_;
+        back_ = size_ % capacity_;
         capacity_ = other.capacity_;
 
         return *this;
