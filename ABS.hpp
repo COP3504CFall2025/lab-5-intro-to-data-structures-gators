@@ -117,7 +117,7 @@ public:
             throw std::runtime_error("Empty Data Structure!");
         }
         T popped = array_[curr_size_ - 1];
-        if (curr_size_ <= capacity_) {
+        if (curr_size_ <= capacity_/scale_factor_) {
             capacity_ /= scale_factor_;
             T* data_2 = new T[capacity_];
             for (std::size_t i = 0; i < curr_size_; i++) {
