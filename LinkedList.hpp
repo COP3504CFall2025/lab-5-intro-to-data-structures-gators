@@ -33,15 +33,27 @@ public:
 		return count;
 	}
 	Node<T>* getHead() {
+		if (head == nullptr) {
+            throw std::runtime_error("Empty Data Structure!");
+        }
 		return head;
 	}
 	const Node<T>* getHead() const {
+		if (head == nullptr) {
+            throw std::runtime_error("Empty Data Structure!");
+        }
 		return head;
 	}
 	Node<T>* getTail() {
+		if (tail == nullptr) {
+            throw std::runtime_error("Empty Data Structure!");
+        }
 		return tail;
 	}
 	const Node<T>* getTail() const {
+		if (tail == nullptr) {
+            throw std::runtime_error("Empty Data Structure!");
+        }
 		return tail;
 	}
 
@@ -135,16 +147,12 @@ public:
 	LinkedList<T>& operator=(const LinkedList<T>& rhs) {
 		if (this == &rhs) return *this;
         this->Clear();
-		Node<T>* ptr = rhs.head;
-		this->addHead(ptr->data);
-		while (ptr->next != nullptr) {
-			ptr = ptr->next;
-			Node<T>* new_node = new Node{ptr->data, ptr->prev, ptr->next};
-			head->next = new_node;
-			tail = new_node;
-		}
-		count = rhs.count;
-
+		count = 0;
+		head = nullptr;
+		tail = nullptr;
+		for (Node<T>* p = rhs.head; p != nullptr; p = p->next) {
+        	addTail(p->data);
+    	}
         return *this;
 	}
 
@@ -154,10 +162,8 @@ public:
 		count = 0;
 		head = nullptr;
 		tail = nullptr;
-		Node<T>* otherptr = list.head;
-		while (otherptr != nullptr) {
-			this->addTail(otherptr->data);
-			otherptr = otherptr->next;
+		for (Node<T>* p = list.head; p != nullptr; p = p->next) {
+			this->addTail(p->data);
 		}
 		count = list.count;
 	}

@@ -27,9 +27,6 @@ public:
 
     // Access
     T peek() const override {
-        if (list.getHead() == nullptr) {
-            throw std::runtime_error("Empty Data Structure!");
-        }
         return list.getHead()->data;
     }
 

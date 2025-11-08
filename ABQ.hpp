@@ -85,7 +85,7 @@ public:
     }
 
     void ensureCapacity() {
-        capacity_ *= SCALE_FACTOR;
+        capacity_ *= scale_factor_;
     }
 
     // Insertion
