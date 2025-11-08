@@ -82,6 +82,10 @@ public:
         return array_;
     }
 
+    void ensureCapacity() {
+        capacity_ *= SCALE_FACTOR;
+    }
+
     // Push item onto the stack
     void push(const T& data) override {
         if (capacity_ == 0) { capacity_ = 1; array_ = new T[capacity_]; }
