@@ -20,6 +20,10 @@ public:
 
     // Deletion
     T dequeue() override {
+        const Node<T>* var = list.getHead();
+        if (var == nullptr) {
+            throw std::runtime_error("Empty Data Structure!");
+        }
         T var = list.getHead()->data;
         list.removeHead();
         return var;

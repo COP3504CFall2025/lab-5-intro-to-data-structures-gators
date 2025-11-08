@@ -144,7 +144,7 @@ public:
             data_ = data_2;
             capacity_ = new_capacity_;
             front_ = 0;
-            back_  = size_;
+            back_  = size_ - 1;
         }
     }
 
