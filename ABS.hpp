@@ -107,18 +107,27 @@ public:
 
     T peek() const override {
         if (curr_size_ == 0) {
-            throw std::out_of_range("Index out of range");
+            throw std::runtime_error("Empty Data Structure!");
         }
         return array_[0];
     }
 
     T pop() override {
         if (curr_size_ == 0) {
-            throw std::out_of_range("Index out of range");
+            throw std::runtime_error("Empty Data Structure!");
         }
-        T popped = array_[0];
+        T popped = array_[curr_size_ - 1];
         array_[curr_size_ - 1] = 0;
         curr_size_--;
+        if (curr_size_ <= capacity_) {
+            capacity_ /= scale_factor_;
+            T* data_2 = new T[capacity_];
+            for (std::size_t i = 0; i < curr_size_; i++) {
+                data_2[i] = array_[i];
+            }
+            delete[] array_;
+            array_ = data_2;
+        }
         return popped;
     }
 
