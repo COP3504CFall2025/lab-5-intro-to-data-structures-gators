@@ -91,12 +91,12 @@ public:
             for (std::size_t i = 0; i < curr_size_; i++) {
                 data_2[i] = array_[i];
             }
-            data_2[curr_size_] = item;
+            data_2[curr_size_] = data;
             curr_size_++;
             delete[] array_;
             array_ = data_2;
         } else {
-            array_[curr_size_] = item;
+            array_[curr_size_] = data;
             curr_size_++;
         }
     }
@@ -113,20 +113,20 @@ public:
             throw std::out_of_range("Index out of range");
         }
         T popped = array_[0];
-        array_[size_ - 1] = 0;
+        array_[curr_size_ - 1] = 0;
         curr_size_--;
         return popped;
     }
 
     void PrintForward() {
-        for (int i = 0; i < size_; i++) {
-            std::cout << data_[i] << std::endl;
+        for (int i = 0; i < curr_size_; i++) {
+            std::cout << array_[i] << std::endl;
         }
     }
 
     void PrintReverse() {
-        for (int i = size_ - 1; i >= 0; i--) {
-            std::cout << data_[i] << std::endl;
+        for (int i = curr_size_ - 1; i >= 0; i--) {
+            std::cout << array_[i] << std::endl;
         }
     }
 
