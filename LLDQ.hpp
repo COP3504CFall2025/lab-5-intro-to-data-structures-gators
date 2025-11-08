@@ -39,18 +39,16 @@ public:
 
     // Element Accessors
     const T& front() const override {
-        Node<T>* var = list.getHead();
-        if (var->data == nullptr) {
+        if (list.getHead() == nullptr) {
             return 0;
         }
-        return var->data;
+        return list.getHead()->data;
     }
     const T& back() const override {
-        Node<T>* var = list.getTail()->data;
-        if (var->data == nullptr) {
+        if (list.getHead() == nullptr) {
             return 0;
         }
-        return var->data;
+        return list.getHead()->data;
     }
 
     // Getter

@@ -27,7 +27,10 @@ public:
 
     // Access
     T peek() const override {
-        return list.getHead();
+        if (list.getHead() == nullptr) {
+            return 0
+        }
+        return list.getHead()->data;
     }
 
     //Getters
