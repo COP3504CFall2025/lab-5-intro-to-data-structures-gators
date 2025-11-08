@@ -40,12 +40,12 @@ public:
     }
     ABDQ& operator=(const ABDQ& other) {
         if (this == &other) return *this;
-        delete[] data_;
 
         T* data_2 = new T[other.capacity_];
         for (std::size_t i = 0; i < other.size_; ++i) {
             data_[i] = other.data_[(other.front_ + i) % other.capacity_];
         }
+        delete[] data_;
         data_ = data_2;
         size_ = other.size_;
         front_ = 0;
