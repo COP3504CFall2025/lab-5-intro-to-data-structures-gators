@@ -33,27 +33,15 @@ public:
 		return count;
 	}
 	Node<T>* getHead() {
-		if (head == nullptr) {
-            throw std::runtime_error("Empty Data Structure!");
-        }
 		return head;
 	}
 	const Node<T>* getHead() const {
-		if (head == nullptr) {
-            throw std::runtime_error("Empty Data Structure!");
-        }
 		return head;
 	}
 	Node<T>* getTail() {
-		if (tail == nullptr) {
-            throw std::runtime_error("Empty Data Structure!");
-        }
 		return tail;
 	}
 	const Node<T>* getTail() const {
-		if (tail == nullptr) {
-            throw std::runtime_error("Empty Data Structure!");
-        }
 		return tail;
 	}
 

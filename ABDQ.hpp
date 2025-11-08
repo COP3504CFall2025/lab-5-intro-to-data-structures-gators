@@ -130,7 +130,7 @@ public:
         data_ = data_2;
         capacity_ = new_capacity_;
         front_ = 0;
-        back_  = size_ % capacity;
+        back_  = size_ % capacity_;
     }
 
     void shrinkIfNeeded() {
