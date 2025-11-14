@@ -152,7 +152,7 @@ public:
         front_ = (front_+1) % capacity_;
         size_ -= 1;
 
-        if (size_ > 0 && size_ < capacity_ / SCALE_FACTOR) {
+        if (size_ > 1 && size_ < capacity_ / SCALE_FACTOR) {
             int oldCapacity = capacity_;
             capacity_ /= SCALE_FACTOR;
             
@@ -176,7 +176,7 @@ public:
         back_ = (back_ + capacity_ - 1) % capacity_;
         size_ -= 1;
 
-        if (size_ > 0 && size_ < capacity_ / SCALE_FACTOR) {
+        if (size_ > 1 && size_ < capacity_ / SCALE_FACTOR) {
             int oldCapacity = capacity_;
             capacity_ /= SCALE_FACTOR;
             
