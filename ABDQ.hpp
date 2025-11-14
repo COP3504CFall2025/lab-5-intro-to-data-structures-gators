@@ -36,10 +36,10 @@ public:
         this->data_ = new T[other.capacity_];
         this->capacity_ = other.capacity_;
         this->size_ = other.size_;
-        this->front_ = other.front_;
-        this->back_ = other.back_;
+        this->front_ = 0;
+        this->back_ = other.size_;
         for (int i = 0; i < other.size_; i++){
-            this->data_[i] = other.data_[i];
+            this->data_[i] = other.data_[(other.front_ + i) % other.capacity_];
         }
     }
     ABDQ(ABDQ&& other) noexcept{
@@ -62,10 +62,10 @@ public:
         this->data_ = new T[other.capacity_];
         this->capacity_ = other.capacity_;
         this->size_ = other.size_;
-        this->front_ = other.front_;
-        this->back_ = other.back_;
-        for (int i = 0; i < other.size_; i++){
-            this->data_[i] = other.data_[i];
+        this->front_ = 0;
+        this->back_ = other.size_;
+        for (size_t i = 0; i < other.size_; i++) {
+            this->data_[i] = other.data_[(other.front_ + i) % other.capacity_];
         }
         return *this;
     }
@@ -98,6 +98,7 @@ public:
     // Insertion
     void pushFront(const T& item) override{
         if (size_ == capacity_){
+            std::size_t oldCapacity = capacity_;
             if (capacity_ == 0) {
                 capacity_ = 1;
                 data_ = new T[capacity_];
@@ -106,7 +107,7 @@ public:
                 capacity_ *= SCALE_FACTOR;
                 T* temp = new T[capacity_];
                 for (int i = 0; i < size_; i++){
-                    temp[i] = data_[(i + front_) % (capacity_/SCALE_FACTOR)];
+                    temp[i] = data_[(front_ + i) % oldCapacity];
                 }
                 delete[] data_;
                 data_ = temp;
@@ -124,17 +125,21 @@ public:
     }
     void pushBack(const T& item) override{
         if (size_ == capacity_){
+            std::size_t oldCapacity = capacity_;
             if (capacity_ == 0) {
                 capacity_ = 1;}
             else { capacity_ *= SCALE_FACTOR;}
             T* temp = new T[capacity_];
-            for (int i = front_; i < size_+front_; i++){
-                temp[i] = data_[i];
+            for (int i = 0; i < size_; i++){
+                temp[i] = data_[(front_ + i) % oldCapacity];
             }
             delete[] data_;
             data_ = temp;
+            front_ = 0;
+            back_ = 0;
         }
-        data_[(front_ + size_) % capacity_] = item;
+        data_[back_] = item;
+        back_ = (back_ + 1) % capacity_;
         size_ += 1;
     }
 
