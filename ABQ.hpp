@@ -113,6 +113,17 @@ public:
             array_[i] = array_[i+1];
         }
         curr_size_ -= 1;
+
+        if (curr_size_ > 0 && curr_size_ < capacity_ / scale_factor_) {
+            capacity_ /= scale_factor_;
+            T* temp = new T[capacity_];
+            for (int i = 0; i < curr_size_; i++){
+                temp[i] = array_[i];
+            }
+            delete[] array_;
+            array_ = temp;
+        }
+
         return value;
     }
 
