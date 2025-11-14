@@ -25,7 +25,7 @@ public:
         if (list.getCount() == 0){
             throw std::runtime_error("LLS is empty");
         }
-        T value = list.tail->data;
+        T value = list.getTail()->data;
         list.removeTail();
         return value;
     }
@@ -35,7 +35,7 @@ public:
         if (list.getCount() == 0){
             throw std::runtime_error("LLS is empty");
         }
-        return list.tail->data;
+        return list.getTail()->data;
     }
 
     //Getters

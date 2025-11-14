@@ -52,7 +52,7 @@ public:
         other.capacity_ = 0;
         other.size_ = 0;
         other.front_ = 0;
-        other.back = 0;
+        other.back_ = 0;
     }
     ABDQ& operator=(const ABDQ& other){
         if (this == &other){
@@ -83,7 +83,7 @@ public:
         other.capacity_ = 0;
         other.size_ = 0;
         other.front_ = 0;
-        other.back = 0;
+        other.back_ = 0;
         return *this;
     }
     ~ABDQ() override{
@@ -92,7 +92,7 @@ public:
         capacity_ = 0;
         size_ = 0;
         front_ = 0;
-        back = 0;
+        back_ = 0;
     }
 
     // Insertion

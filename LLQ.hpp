@@ -25,7 +25,7 @@ public:
         if (list.getCount() == 0){
         throw std::runtime_error("LLQ is empty");
         }
-        T value = list.head->data;
+        T value = list.getHead()->data;
         list.removeHead();
         return value;
     }
@@ -35,7 +35,7 @@ public:
         if (list.getCount() == 0){
             throw std::runtime_error("LLQ is empty");
         }
-        return list.head->data;
+        return list.getHead()->data;
     }
 
     // Getter

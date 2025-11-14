@@ -32,7 +32,7 @@ public:
         if (list.getCount() == 0){
             throw std::runtime_error("LLDQ is empty");
         }
-        return list.head->data;
+        return list.getHead()->data;
     }
     T popBack() override{
         if (list.getCount() == 0){
@@ -48,17 +48,17 @@ public:
         if (list.getCount() == 0){
             throw std::runtime_error("LLQ is empty");
         }
-        return list.head->data;
+        return list.getHead()->data;
     }
     const T& back() const override{
         if (list.getCount() == 0){
             throw std::runtime_error("LLS is empty");
         }
-        return list.tail->data;
+        return list.getTail()->data;
     }
 
     // Getter
-    std::size_t getSize() const noexcept override {return list.getCOunt();}
+    std::size_t getSize() const noexcept override {return list.getCount();}
 };
 
 
