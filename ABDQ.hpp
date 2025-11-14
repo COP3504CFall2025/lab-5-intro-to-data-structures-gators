@@ -174,6 +174,7 @@ public:
             throw std::runtime_error("ABDQ is empty");
         }
         back_ = (back_ + capacity_ - 1) % capacity_;
+        T value = data_[back_];
         size_ -= 1;
 
         if (size_ > 1 && size_ < capacity_ / SCALE_FACTOR) {
@@ -191,7 +192,7 @@ public:
             back_ = size_;
         }
 
-        return data_[back_];
+        return value;
     }
 
     // Access
