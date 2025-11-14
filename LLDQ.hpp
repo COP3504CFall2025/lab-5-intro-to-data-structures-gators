@@ -32,7 +32,9 @@ public:
         if (list.getCount() == 0){
             throw std::runtime_error("LLDQ is empty");
         }
-        return list.getHead()->data;
+        T value = list.getHead()->data;
+        list.removeHead();
+        return value;
     }
     T popBack() override{
         if (list.getCount() == 0){

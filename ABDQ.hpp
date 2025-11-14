@@ -86,7 +86,7 @@ public:
         other.back_ = 0;
         return *this;
     }
-    ~ABDQ() override{
+    ~ABDQ(){
         delete[] this->data_;
         data_ = nullptr;
         capacity_ = 0;

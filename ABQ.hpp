@@ -69,7 +69,7 @@ public:
         rhs.curr_size_ = 0;
         return *this;
     }
-    ~ABQ() noexcept override{
+    ~ABQ() noexcept {
         delete[] this->array_;
         array_ = nullptr;
         capacity_ = 0;
