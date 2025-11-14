@@ -93,10 +93,7 @@ public:
             delete[] array_;
             array_ = temp;
         }
-        for (int i = curr_size_; i > 0; i--){
-            array_[i] = array_[i-1];
-        }
-        array_[0] = data;
+        array_[curr_size_] = data;
         curr_size_ += 1;
     }
 

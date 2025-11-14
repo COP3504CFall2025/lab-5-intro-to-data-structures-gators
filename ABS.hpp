@@ -104,8 +104,9 @@ public:
         if (curr_size_ == 0){
             throw std::runtime_error("ABS is empty");
         }
+        T value = array_[curr_size_-1];
         curr_size_ -= 1;
-        return array_[curr_size_];
+        return value;
     }
 
 private:

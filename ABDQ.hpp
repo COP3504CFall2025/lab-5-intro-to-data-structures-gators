@@ -27,7 +27,7 @@ public:
     }
     explicit ABDQ(std::size_t capacity){
         data_ = new T[capacity];
-        capacity_ = capacity_;
+        capacity_ = capacity;
         size_ = 0;
         front_ = 0;
         back_ = 0;
@@ -145,15 +145,16 @@ public:
         }
         T value = data_[front_];
         front_ = (front_+1) % capacity_;
+        size_ -= 1;
         return value;
     }
     T popBack() override{
         if (size_ == 0){
             throw std::runtime_error("ABDQ is empty");
         }
-        T value = data_[back_];
-        back_ = (back_-1) % capacity_;
-        return value;
+        back_ = (back_ + capacity_ - 1) % capacity_;
+        size_ -= 1;
+        return data_[back_];
     }
 
     // Access
@@ -162,7 +163,7 @@ public:
         throw std::runtime_error("ABDQ is empty");
     }
     const T& back() const override{
-        if (size_ > 0){ return data_[back_];}
+        if (size_ > 0){ return data_[(back_ + capacity_ - 1) % capacity_];}
         throw std::runtime_error("ABDQ is empty");
     }
 
