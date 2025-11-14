@@ -15,22 +15,50 @@ private:
 
 public:
     // Constructor
-    LLDQ();
+    LLDQ(){
+        list = LinkedList<T>();
+    }
 
     // Core Insertion Operations
-    void pushFront(const T& item) override;
-    void pushBack(const T& item) override;
+    void pushFront(const T& item) override{
+        list.addHead(item);
+    }
+    void pushBack(const T& item) override{
+        list.addTail(item);
+    }
 
     // Core Removal Operations
-    T popFront() override;
-    T popBack() override;
+    T popFront() override{
+        if (list.getCount() == 0){
+            throw std::runtime_error("LLDQ is empty");
+        }
+        return list.head->data;
+    }
+    T popBack() override{
+        if (list.getCount() == 0){
+            throw std::runtime_error("LLS is empty");
+        }
+        T value = list.tail->data;
+        list.removeTail();
+        return value;
+    }
 
     // Element Accessors
-    const T& front() const override;
-    const T& back() const override;
+    const T& front() const override{
+        if (list.getCount() == 0){
+            throw std::runtime_error("LLQ is empty");
+        }
+        return list.head->data;
+    }
+    const T& back() const override{
+        if (list.getCount() == 0){
+            throw std::runtime_error("LLS is empty");
+        }
+        return list.tail->data;
+    }
 
     // Getter
-    std::size_t getSize() const noexcept override;
+    std::size_t getSize() const noexcept override {return list.getCOunt();}
 };
 
 
