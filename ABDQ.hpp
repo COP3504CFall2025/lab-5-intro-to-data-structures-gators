@@ -151,6 +151,22 @@ public:
         T value = data_[front_];
         front_ = (front_+1) % capacity_;
         size_ -= 1;
+
+        if (size_ > 0 && size_ < capacity_ / SCALE_FACTOR) {
+            int oldCapacity = capacity_;
+            capacity_ /= SCALE_FACTOR;
+            
+            T* temp = new T[capacity_];
+            for (int i = 0; i < size_; i++){
+                temp[i] = data_[(front_ + i) % oldCapacity];
+            }
+            
+            delete[] data_;
+            data_ = temp;
+            front_ = 0;
+            back_ = size_;
+        }
+
         return value;
     }
     T popBack() override{
@@ -159,6 +175,22 @@ public:
         }
         back_ = (back_ + capacity_ - 1) % capacity_;
         size_ -= 1;
+
+        if (size_ > 0 && size_ < capacity_ / SCALE_FACTOR) {
+            int oldCapacity = capacity_;
+            capacity_ /= SCALE_FACTOR;
+            
+            T* temp = new T[capacity_];
+            for (int i = 0; i < size_; i++){
+                temp[i] = data_[(front_ + i) % oldCapacity];
+            }
+            
+            delete[] data_;
+            data_ = temp;
+            front_ = 0;
+            back_ = size_;
+        }
+
         return data_[back_];
     }
 
