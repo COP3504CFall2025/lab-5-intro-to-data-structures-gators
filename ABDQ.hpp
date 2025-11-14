@@ -136,7 +136,7 @@ public:
             delete[] data_;
             data_ = temp;
             front_ = 0;
-            back_ = 0;
+            back_ = size_;
         }
         data_[back_] = item;
         back_ = (back_ + 1) % capacity_;
